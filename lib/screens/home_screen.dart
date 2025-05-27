@@ -1,11 +1,19 @@
-// lib/screens/home_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'main_layout.dart';
+import 'package:crmpro26/screens/customers_screen.dart';
+import 'package:crmpro26/screens/visits_screen.dart';
+import 'enquiry_screen.dart';
+import 'leads_screen.dart';
+import 'calls_screen.dart';
+import 'add_edit_visit_dialog.dart';
+import 'add_enquiry.dart';
+import 'add_call.dart';
+import 'add_customer.dart';
+import 'reports_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -90,35 +98,77 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildStatsCards() {
     List<Map<String, dynamic>> stats = [
-      {'title': 'Enquiries', 'value': '678', 'icon': Icons.question_answer},
-      {'title': 'Leads', 'value': '347', 'icon': Icons.leaderboard},
-      {'title': 'Visits', 'value': '650', 'icon': Icons.event},
-      {'title': 'Calls', 'value': '478', 'icon': Icons.phone},
+      {
+        'title': 'Enquiries',
+        'value': '678',
+        'icon': Icons.question_answer,
+        'screen': const EnquiryScreen(),
+      },
+      {
+        'title': 'Leads',
+        'value': '347',
+        'icon': Icons.leaderboard,
+        'screen': const LeadsScreen(),
+      },
+      {
+        'title': 'Visits',
+        'value': '650',
+        'icon': Icons.event,
+        'screen': const VisitsScreen(),
+      },
+      {
+        'title': 'Calls',
+        'value': '478',
+        'icon': Icons.phone,
+        'screen': const CallsScreen(),
+      },
     ];
 
     return Wrap(
       spacing: 16,
       runSpacing: 16,
       children: stats.map((item) {
-        return Container(
-          width: 250,
-          height: 150,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF3E5F5),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(item['icon'], size: 30),
-              const SizedBox(height: 8),
-              Text(item['title'], style: GoogleFonts.poppins(fontSize: 14)),
-              Text(item['value'],
-                  style: GoogleFonts.poppins(
-                      fontSize: 22, fontWeight: FontWeight.bold)),
-              Text('Total', style: GoogleFonts.poppins(fontSize: 12)),
-            ],
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => item['screen']),
+              );
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              width: 250,
+              height: 150,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 247, 243, 252),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.deepPurple.withOpacity(0.1),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(item['icon'], size: 24, color: Colors.deepPurple),
+                  const SizedBox(height: 8),
+                  Text(item['title'],
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, fontWeight: FontWeight.bold)),
+                  Text(item['value'],
+                      style: GoogleFonts.poppins(
+                          fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text('Total', style: GoogleFonts.poppins(fontSize: 12)),
+                ],
+              ),
+            ),
           ),
         );
       }).toList(),
@@ -127,10 +177,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildQuickActions() {
     List<Map<String, dynamic>> actions = [
-      {'label': 'Add Customer', 'icon': Icons.person_add},
-      {'label': 'Add Enquiry', 'icon': Icons.question_answer},
-      {'label': 'Log Call', 'icon': Icons.phone},
-      {'label': 'Schedule Visit', 'icon': Icons.event},
+      {
+        'label': 'Add Customer',
+        'icon': Icons.person_add,
+        'screen': const AddCustomerScreen(),
+      },
+      {
+        'label': 'Add Enquiry',
+        'icon': Icons.question_answer,
+        'screen': const AddEnquiryScreen(),
+      },
+      {
+        'label': 'Log Call',
+        'icon': Icons.phone,
+        'screen': const AddCallScreen(),
+      },
+      {
+        'label': 'Schedule Visit',
+        'icon': Icons.event,
+        'screen': AddEditVisitDialog(
+          customerNames: const [],
+          visits: const [],
+          onSave: (visit, [index]) {},
+        ),
+      },
     ];
 
     return Column(
@@ -143,30 +213,27 @@ class _HomeScreenState extends State<HomeScreen> {
         Wrap(
           spacing: 16,
           runSpacing: 16,
-          children: actions
-              .map((item) => MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: ElevatedButton.icon(
-                      icon: Icon(item['icon']),
-                      label: Text(item['label']),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF7B1FA2),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 24),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: Text(item['label']),
-                            content: const Text('This is a temporary popup.'),
-                          ),
-                        );
-                      },
-                    ),
-                  ))
-              .toList(),
+          children: actions.map((item) {
+            return MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: ElevatedButton.icon(
+                icon: Icon(item['icon']),
+                label: Text(item['label']),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF7B1FA2),
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => item['screen']),
+                  );
+                },
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -176,7 +243,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ReportsScreen()),
+          );
+        },
         child: Container(
           width: 300,
           decoration: BoxDecoration(
@@ -191,8 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Icon(Icons.bar_chart, size: 28),
                   const SizedBox(width: 12),
-                  Text('Report Summary',
-                      style: GoogleFonts.poppins(fontSize: 18)),
+                  Text(
+                    'Report Summary',
+                    style: GoogleFonts.poppins(fontSize: 18),
+                  ),
                 ],
               ),
               const Icon(Icons.chevron_right),
@@ -309,23 +383,28 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const SizedBox(height: 16),
-        Wrap(
-          children: chartOptions.map((e) {
-            final selected = selectedChart == e;
+        Row(
+          children: chartOptions.map((option) {
+            final isSelected = selectedChart == option;
+
             return Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ChoiceChip(
-                label: Text(e,
-                    style: TextStyle(
-                      color: selected ? Colors.black : Colors.grey[600],
-                      decoration: selected
-                          ? TextDecoration.underline
-                          : TextDecoration.none,
-                    )),
-                selected: selected,
-                onSelected: (_) => setState(() => selectedChart = e),
-                backgroundColor: Colors.grey[300],
-                selectedColor: Colors.grey[100],
+              padding: const EdgeInsets.only(right: 16.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedChart = option;
+                  });
+                },
+                child: Text(
+                  option,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                    color: isSelected ? Colors.black : Colors.grey,
+                    decoration: isSelected ? TextDecoration.underline : null,
+                  ),
+                ),
               ),
             );
           }).toList(),
