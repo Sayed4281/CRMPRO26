@@ -4,7 +4,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'main_layout.dart';
-import 'package:crmpro26/screens/customers_screen.dart';
 import 'package:crmpro26/screens/visits_screen.dart';
 import 'enquiry_screen.dart';
 import 'leads_screen.dart';
@@ -147,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.deepPurple.withOpacity(0.1),
                     blurRadius: 6,
                     offset: const Offset(0, 3),
