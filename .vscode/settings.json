@@ -1,5 +1,6 @@
 {
   "files.associations": {
     "*.dart": "dart"
-  }
+  },
+  "cmake.ignoreCMakeListsMissing": true
 }
