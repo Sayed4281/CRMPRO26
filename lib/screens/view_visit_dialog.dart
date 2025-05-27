@@ -26,47 +26,52 @@ class ViewVisitDialog extends StatelessWidget {
       case 'Follow-up':
         return ['lead', 'discussion'].contains(field);
       case 'Demo':
-        return ['lead', 'demoGivenTo', 'status', 'completionDate', 'feedback']
-            .contains(field);
+        return ['lead', 'demoGivenTo', 'status', 'completionDate', 'feedback'].contains(field);
       case 'Installation':
         return ['lead', 'status', 'trainingGivenTo', 'remarks'].contains(field);
       case 'Training':
-        return [
-          'lead',
-          'status',
-          'reason',
-          'trainingGivenTo',
-          'remarks'
-        ].contains(field) &&
-            (field != 'reason' ||
-                (status == 'In Progress' || status == 'Cancelled'));
+        return ['lead', 'status', 'reason', 'trainingGivenTo', 'remarks'].contains(field) &&
+            (field != 'reason' || (status == 'In Progress' || status == 'Cancelled'));
       case 'Service':
-        return [
-          'equipment',
-          'issueReport',
-          'status',
-          'reason',
-          'remarks'
-        ].contains(field) &&
-            (field != 'reason' ||
-                (status == 'In Progress' || status == 'Cancelled'));
+        return ['equipment', 'issueReport', 'status', 'reason', 'remarks'].contains(field) &&
+            (field != 'reason' || (status == 'In Progress' || status == 'Cancelled'));
       case 'Payment':
         return ['lead', 'amount', 'paymentCollected', 'remarks'].contains(field);
       default:
-        return [
-          'status',
-          'completionDate',
-          'feedback',
-          'trainingGivenTo',
-          'remarks',
-          'equipment',
-          'issueReport',
-          'reason',
-          'paymentCollected'
-        ].contains(field) &&
-            (field != 'reason' ||
-                (status == 'In Progress' || status == 'Cancelled'));
+        return ['status', 'completionDate', 'feedback', 'trainingGivenTo', 'remarks', 'equipment', 'issueReport', 'reason', 'paymentCollected']
+            .contains(field) &&
+            (field != 'reason' || (status == 'In Progress' || status == 'Cancelled'));
     }
+  }
+
+  // New method to map field names to display labels
+  String _getDisplayLabel(String field) {
+    const fieldToLabelMap = {
+      'name': 'Customer Name',
+      'type': 'Visit Type',
+      'visitId': 'Visit ID',
+      'person1': 'Person 1',
+      'person2': 'Person 2',
+      'person3': 'Person 3',
+      'person4': 'Person 4',
+      'contactNumber': 'Contact Number',
+      'designation': 'Designation',
+      'requirements': 'Requirements',
+      'lead': 'Lead',
+      'discussion': 'Discussion',
+      'demoGivenTo': 'Demo Given To',
+      'status': 'Status',
+      'completionDate': 'Completion Date',
+      'feedback': 'Feedback',
+      'trainingGivenTo': 'Training Given To',
+      'remarks': 'Remarks',
+      'equipment': 'Equipment',
+      'issueReport': 'Issue Report',
+      'reason': 'Reason',
+      'amount': 'Amount',
+      'paymentCollected': 'Payment Collected',
+    };
+    return fieldToLabelMap[field] ?? field; // Fallback to field name if not mapped
   }
 
   Widget _buildDetailRow(String label, String value, {int maxLines = 1}) {
@@ -140,9 +145,7 @@ class ViewVisitDialog extends StatelessWidget {
     ];
 
     // Filter fields that should be shown and handle nulls
-    final visibleFields = allFields
-        .where((field) => _shouldShowField(field, visitType, status))
-        .toList();
+    final visibleFields = allFields.where((field) => _shouldShowField(field, visitType, status)).toList();
 
     // Ensure name, type, and visitId are included
     final Map<String, String> displayVisit = Map.from(visit);
@@ -161,12 +164,8 @@ class ViewVisitDialog extends StatelessWidget {
     ];
 
     // Separate fields into full-width and those needing pairing
-    final fullWidth = visibleFields
-        .where((field) => fullWidthFields.contains(field) && displayVisit[field] != null)
-        .toList();
-    final toPair = visibleFields
-        .where((field) => !fullWidthFields.contains(field) && displayVisit[field] != null)
-        .toList();
+    final fullWidth = visibleFields.where((field) => fullWidthFields.contains(field) && displayVisit[field] != null).toList();
+    final toPair = visibleFields.where((field) => !fullWidthFields.contains(field) && displayVisit[field] != null).toList();
 
     // Prioritize name, type, and visitId at the start
     final orderedToPair = ['name', 'type', 'visitId']
@@ -185,7 +184,7 @@ class ViewVisitDialog extends StatelessWidget {
           children: [
             Expanded(
               child: _buildDetailRow(
-                field1.replaceAll(RegExp(r'([A-Z])'), ' \$1').trim(),
+                _getDisplayLabel(field1), // Use the mapped label
                 field1 == 'completionDate'
                     ? DateTime.parse(displayVisit[field1]!).toString().split(' ')[0]
                     : displayVisit[field1]!,
@@ -195,7 +194,7 @@ class ViewVisitDialog extends StatelessWidget {
             Expanded(
               child: field2 != null
                   ? _buildDetailRow(
-                field2.replaceAll(RegExp(r'([A-Z])'), ' \$1').trim(),
+                _getDisplayLabel(field2), // Use the mapped label
                 field2 == 'completionDate'
                     ? DateTime.parse(displayVisit[field2]!).toString().split(' ')[0]
                     : displayVisit[field2]!,
@@ -211,7 +210,7 @@ class ViewVisitDialog extends StatelessWidget {
     for (final field in fullWidth) {
       rows.add(
         _buildDetailRow(
-          field.replaceAll(RegExp(r'([A-Z])'), ' \$1').trim(),
+          _getDisplayLabel(field), // Use the mapped label
           field == 'completionDate'
               ? DateTime.parse(displayVisit[field]!).toString().split(' ')[0]
               : displayVisit[field]!,
