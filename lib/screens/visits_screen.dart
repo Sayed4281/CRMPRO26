@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'main_layout.dart';
 
 class VisitsScreen extends StatelessWidget {
   const VisitsScreen({super.key});
