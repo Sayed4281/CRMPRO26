@@ -6,7 +6,6 @@ import 'screens/sign_up_screen.dart';
 import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
 
-
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppTheme.theme,
       debugShowCheckedModeBanner: false, // Add this line
-      home: const SignInScreen(),
+      home: const HomeScreen(),
       routes: {
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
