@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'dart:ui';
 import 'main_layout.dart';
 import 'package:crmpro26/screens/visits_screen.dart';
 import 'enquiry_screen.dart';
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 32),
                 _buildStatsCards(),
                 const SizedBox(height: 32),
-                _buildQuickActions(),
+                _buildQuickActions(context),
                 const SizedBox(height: 32),
                 _buildReportRedirect(),
                 const SizedBox(height: 32),
@@ -175,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildQuickActions() {
+  Widget _buildQuickActions(BuildContext context) {
     List<Map<String, dynamic>> actions = [
       {
         'label': 'Add Customer',
@@ -195,20 +196,49 @@ class _HomeScreenState extends State<HomeScreen> {
       {
         'label': 'Schedule Visit',
         'icon': Icons.event,
-        'screen': AddEditVisitDialog(
-          customerNames: const [],
-          visits: const [],
-          onSave: (visit, [index]) {},
-        ),
+        // No screen for this — handled with a dialog
       },
     ];
+
+    void _showScheduleVisitDialog() {
+      showDialog(
+        context: context,
+        barrierColor: Colors.transparent, // Glass effect
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              backgroundColor:
+                  Colors.white.withOpacity(0.9), // Glass-like dialog
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                  maxHeight: 600,
+                ),
+                child: AddEditVisitDialog(
+                  customerNames: const [], // Replace with actual list
+                  visits: const [], // Replace with actual data
+                  onSave: (visit, [index]) {
+                    // Handle save logic
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Quick Actions',
-            style:
-                GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600)),
+        Text(
+          'Quick Actions',
+          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
         const SizedBox(height: 16),
         Wrap(
           spacing: 16,
@@ -226,10 +256,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => item['screen']),
-                  );
+                  if (item['label'] == 'Schedule Visit') {
+                    _showScheduleVisitDialog();
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => item['screen']),
+                    );
+                  }
                 },
               ),
             );
