@@ -206,18 +206,18 @@ class _VisitsScreenState extends State<VisitsScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    color: Colors.black,
-                  ),
-                ),
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFFE6E6FA),
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  'Cancel',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -236,18 +236,18 @@ class _VisitsScreenState extends State<VisitsScreen> {
                     ),
                   );
                 },
-                child: Text(
-                  'Delete',
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
-                ),
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF6C5DD3),
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  'Delete',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ),
