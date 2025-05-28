@@ -374,46 +374,57 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Overview${selectedDate != null ? ' - ${_dateFormat.format(selectedDate!)}' : ''}',
-              style: GoogleFonts.poppins(
-                  fontSize: 20, fontWeight: FontWeight.w600),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Overview${selectedDate != null ? ' - ${_dateFormat.format(selectedDate!)}' : ''}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis, // Shrink long text
+                  ),
+                ],
+              ),
             ),
-          ]),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  DateTime? picked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2030),
-                  );
-                  if (picked != null) {
-                    setState(() => selectedDate = picked);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple.shade400,
-                  foregroundColor: Colors.white,
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2030),
+                    );
+                    if (picked != null) {
+                      setState(() => selectedDate = picked);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple.shade400,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Select Date'),
                 ),
-                child: const Text('Select Date'),
-              ),
-              const SizedBox(width: 12),
-              DropdownButton<String>(
-                value: selectedRange,
-                items: ['Daily', 'Monthly', 'Yearly']
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                    .toList(),
-                onChanged: (val) =>
-                    setState(() => selectedRange = val ?? 'Daily'),
-              ),
-            ],
-          ),
-        ]),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  value: selectedRange,
+                  items: ['Daily', 'Monthly', 'Yearly']
+                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .toList(),
+                  onChanged: (val) =>
+                      setState(() => selectedRange = val ?? 'Daily'),
+                ),
+              ],
+            ),
+          ],
+        ),
         _buildLegend(chartLabels[selectedChart]!, purpleShades),
         const SizedBox(height: 12),
         Wrap(
@@ -427,31 +438,34 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const SizedBox(height: 16),
-        Row(
-          children: chartOptions.map((option) {
-            final isSelected = selectedChart == option;
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: chartOptions.map((option) {
+              final isSelected = selectedChart == option;
 
-            return Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedChart = option;
-                  });
-                },
-                child: Text(
-                  option,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected ? Colors.black : Colors.grey,
-                    decoration: isSelected ? TextDecoration.underline : null,
+              return Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedChart = option;
+                    });
+                  },
+                  child: Text(
+                    option,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
+                      color: isSelected ? Colors.black : Colors.grey,
+                      decoration: isSelected ? TextDecoration.underline : null,
+                    ),
                   ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
         const SizedBox(height: 12),
         Row(
