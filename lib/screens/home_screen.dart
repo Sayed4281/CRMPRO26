@@ -402,10 +402,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2030),
                     );
-                    if (picked != null) {
-                      setState(() => selectedDate = picked);
-                    }
-                  },
+                    setState(() => selectedDate = picked);
+                                    },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple.shade400,
                     foregroundColor: Colors.white,
