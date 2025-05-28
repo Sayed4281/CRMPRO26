@@ -259,16 +259,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const Icon(Icons.bar_chart, size: 28),
-                  const SizedBox(width: 12),
-                  Text(
-                    'Report Summary',
-                    style: GoogleFonts.poppins(fontSize: 18),
-                  ),
-                ],
+              /// Left section (icon + title)
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.bar_chart, size: 28),
+                    const SizedBox(width: 12),
+
+                    /// Make text wrap or ellipsize if needed
+                    Expanded(
+                      child: Text(
+                        'Report Summary',
+                        style: GoogleFonts.poppins(fontSize: 18),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+              /// Right chevron icon
               const Icon(Icons.chevron_right),
             ],
           ),
