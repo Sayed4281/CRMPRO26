@@ -21,6 +21,7 @@ class AppTheme {
         primary: primaryColor,
         secondary: accentColor,
         error: errorColor,
+        brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().copyWith(
         bodyLarge: const TextStyle(color: textColor),
