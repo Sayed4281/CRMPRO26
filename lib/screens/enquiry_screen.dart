@@ -17,7 +17,7 @@ class EnquiryScreen extends StatefulWidget {
 }
 
 class _EnquiryScreenState extends State<EnquiryScreen> {
-  final int rowsPerPage = 5;
+  final int rowsPerPage = 6;
   int currentPage = 0;
 
   final TextEditingController _searchController = TextEditingController();
@@ -139,7 +139,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
             const SizedBox(height: 16),
             const EnquirySummaryCards(),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
             Text(
               "Enquiries List",
               style: GoogleFonts.poppins(
@@ -202,7 +202,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
               width: double.infinity,
               rowHeight: 36,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 30),
             PaginationControls(
               currentPage: currentPage,
               rowsPerPage: rowsPerPage,
@@ -315,7 +315,7 @@ class SearchAndFilter extends StatelessWidget {
             style: GoogleFonts.poppins(fontSize: 10),
           ),
         ),
-        const SizedBox(width: 200),
+        const SizedBox(width: 300),
         Tooltip(
           message: 'Import Enquiries',
           child: InkWell(
@@ -337,7 +337,7 @@ class SearchAndFilter extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 24),
         SizedBox(
           width: 136,
           height: 40,
@@ -629,56 +629,61 @@ class PaginationControls extends StatelessWidget {
           onPressed: currentPage > 0 ? onPrev : null,
           icon: Icon(
             Icons.arrow_back,
+            size: 16, // Smaller icon
             color: currentPage > 0 ? AppTheme.primaryColor : Colors.grey,
           ),
           label: Text(
-            "Previous",
+            "Prev",
             style: GoogleFonts.poppins(
-              fontSize: 13,
+              fontSize: 11, // Smaller text
               color: currentPage > 0 ? AppTheme.primaryColor : Colors.grey,
             ),
           ),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 4), // Reduced spacing
         ...List.generate(totalPages, (index) {
           final bool isSelected = index == currentPage;
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
             child: InkWell(
               onTap: () {
                 if (index != currentPage) {
-                  // Optional: Add a callback here if needed
+                  // Add callback if necessary
                 }
               },
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(4),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color:
                       isSelected ? AppTheme.primaryColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   "${index + 1}",
                   style: GoogleFonts.poppins(
-                    fontSize: 13,
+                    fontSize: 11, // Smaller font
                     color: isSelected ? Colors.white : Colors.black,
                     fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),
                 ),
               ),
             ),
           );
         }),
-        const SizedBox(width: 8),
+        const SizedBox(width: 4), // Reduced spacing
         TextButton.icon(
           onPressed: (currentPage + 1) < totalPages ? onNext : null,
           label: Text(
             "Next",
             style: GoogleFonts.poppins(
-              fontSize: 13,
+              fontSize: 11,
               color: (currentPage + 1) < totalPages
                   ? AppTheme.primaryColor
                   : Colors.grey,
@@ -686,9 +691,15 @@ class PaginationControls extends StatelessWidget {
           ),
           icon: Icon(
             Icons.arrow_forward,
+            size: 16, // Smaller icon
             color: (currentPage + 1) < totalPages
                 ? AppTheme.primaryColor
                 : Colors.grey,
+          ),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ),
       ],
