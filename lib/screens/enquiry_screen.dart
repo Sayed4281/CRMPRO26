@@ -241,7 +241,7 @@ class EnquirySummaryCards extends StatelessWidget {
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.primaryColor.withOpacity(0.2)),
+            side: BorderSide(color: AppTheme.primaryColor),
           ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
