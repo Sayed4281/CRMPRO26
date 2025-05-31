@@ -27,12 +27,11 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _signIn() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-    }
+    // Navigate to HomeScreen without validation
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
   }
 
   Future<void> _launchGoogle() async {

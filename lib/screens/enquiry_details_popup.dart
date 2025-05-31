@@ -154,7 +154,11 @@ class EnquiryDetailsPopup extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 20),
+<<<<<<< HEAD
                               // RIGHT COLUMN (Non-scrollable except for Activity Log)
+=======
+                              // RIGHT COLUMN
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +199,11 @@ class EnquiryDetailsPopup extends StatelessWidget {
                                     const SizedBox(height: 10),
                                     Container(
                                       width: 420,
+<<<<<<< HEAD
                                       height: 200, // Fixed height for activity log
+=======
+                                      height: 200, // Reduced height to fit better
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                         color: isDarkMode ? DarkTheme.backgroundColor : AppTheme.backgroundColor,
@@ -242,7 +250,90 @@ class EnquiryDetailsPopup extends StatelessWidget {
                                                 ),
                                               ),
                                             ],
+<<<<<<< HEAD
                                             rows: _buildActivityLogRows(isDarkMode),
+=======
+                                            rows: [
+                                              DataRow(cells: [
+                                                DataCell(Text(
+                                                  enquiry['index'] ?? '01',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  '08:00 am',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  enquiry['date'] ?? '01/01/2025',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  'Enquiry Created',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                              ]),
+                                              DataRow(cells: [
+                                                DataCell(Text(
+                                                  '02',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  '08:10 am',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  enquiry['date'] ?? '01/01/2025',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  'Edited Checklist',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                              ]),
+                                              DataRow(cells: [
+                                                DataCell(Text(
+                                                  '03',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  '08:15 am',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  enquiry['date'] ?? '01/01/2025',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                  'Updated',
+                                                  style: GoogleFonts.poppins(
+                                                    color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                                                  ),
+                                                )),
+                                              ]),
+                                            ],
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                                           ),
                                         ),
                                       ),
@@ -354,6 +445,7 @@ class EnquiryDetailsPopup extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   List<DataRow> _buildActivityLogRows(bool isDarkMode) {
     // Check if activity log exists in enquiry, otherwise provide default data
     final List<Map<String, dynamic>> activities = enquiry['activityLog'] != null
@@ -411,6 +503,8 @@ class EnquiryDetailsPopup extends StatelessWidget {
     }).toList();
   }
 
+=======
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   Widget _buildSectionBox(List<Widget> children, bool isDarkMode) {
     return Container(
       padding: const EdgeInsets.all(20),

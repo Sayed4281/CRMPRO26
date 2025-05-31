@@ -2,7 +2,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 import 'package:file_picker/file_picker.dart'; // Import file_picker package
+=======
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
 import '../main.dart'; // Import ThemeProvider from main.dart
 import 'main_layout.dart';
 import 'sign_in_screen.dart'; // Import SignInScreen
@@ -26,11 +29,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String? _selectedLanguage;
   String? _selectedTimezone;
 
+<<<<<<< HEAD
   // State variables for profile details
   String _displayName = "Example Name";
   String _displayEmail = "example@email.com";
   String _displayPhone = "+1234567890";
 
+=======
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   // Text controllers for profile and security fields
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -54,6 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
+<<<<<<< HEAD
   // Method to handle file picking for avatar
   Future<void> _pickAvatar() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -82,6 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+=======
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -183,10 +192,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+<<<<<<< HEAD
           // Add the card based on the given design
           Card(
             elevation: 2,
             color: isDarkMode ? null : const Color(0xFFF3EEFB), // Match the background color from the image
+=======
+          Card(
+            elevation: 2,
+            color: isDarkMode ? null : const Color(0xFFF3EEFB), // Light mode: original color, Dark mode: theme color
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -200,6 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Row(
                         children: [
+<<<<<<< HEAD
                           CircleAvatar(
                             radius: 20, // Circular avatar placeholder
                             backgroundColor: isDarkMode ? DarkTheme.whiteColor : Colors.grey[300],
@@ -257,18 +273,144 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               fontWeight: FontWeight.w500,
                               color: isDarkMode ? DarkTheme.textColor : Colors.purple, // Match the purple text color
                             ),
+=======
+                          Icon(
+                            Icons.person_outlined,
+                            color: isDarkMode ? DarkTheme.textColor : Colors.grey[600],
+                          ),
+                          const SizedBox(width: 8.0),
+                          Text(
+                            "Profile",
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: isDarkMode ? DarkTheme.textColor : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Log Out", style: GoogleFonts.poppins()),
+                              content: Text("Are you sure you want to log out?", style: GoogleFonts.poppins()),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Cancel", style: GoogleFonts.poppins()),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Logged out successfully!", style: GoogleFonts.poppins())),
+                                    );
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const SignInScreen()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Log Out",
+                                    style: GoogleFonts.poppins(
+                                      color: isDarkMode ? DarkTheme.errorColor : Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          decoration: BoxDecoration(
+                            color: isDarkMode ? DarkTheme.whiteColor : Colors.purple[50],
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Log Out",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: isDarkMode ? DarkTheme.errorColor : Colors.red,
+                                ),
+                              ),
+                              const SizedBox(width: 4.0),
+                              Icon(
+                                Icons.logout,
+                                color: isDarkMode ? DarkTheme.errorColor : Colors.red,
+                                size: 16.0,
+                              ),
+                            ],
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                           ),
                         ),
                       ),
                     ],
                   ),
+<<<<<<< HEAD
                   const SizedBox(height: 16.0),
                   // Description text
+=======
+                  const SizedBox(height: 8.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Upload Avatar", style: GoogleFonts.poppins()),
+                          content: Text("Select an image to upload as your avatar.", style: GoogleFonts.poppins()),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text("Cancel", style: GoogleFonts.poppins()),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Avatar uploaded successfully!", style: GoogleFonts.poppins())),
+                                );
+                              },
+                              child: Text("Upload", style: GoogleFonts.poppins()),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isDarkMode ? DarkTheme.primaryColor : Colors.purple[50],
+                      foregroundColor: isDarkMode ? DarkTheme.textColor : Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    ),
+                    child: Text(
+                      "Upload Avatar",
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: isDarkMode ? DarkTheme.textColor : Colors.purple,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                   Text(
                     "Update your personal information and avatar.",
                     style: GoogleFonts.poppins(
                       fontSize: 14,
+<<<<<<< HEAD
                       color: isDarkMode ? DarkTheme.textColor : Colors.grey[600], // Match the gray color
+=======
+                      color: isDarkMode ? DarkTheme.textColor : Colors.grey[600],
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                     ),
                   ),
                 ],
@@ -289,12 +431,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (_nameController.text.isNotEmpty &&
                     _emailController.text.isNotEmpty &&
                     _phoneController.text.isNotEmpty) {
+<<<<<<< HEAD
                   setState(() {
                     // Update the displayed profile details
                     _displayName = _nameController.text;
                     _displayEmail = _emailController.text;
                     _displayPhone = _phoneController.text;
                   });
+=======
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Profile updated successfully!", style: GoogleFonts.poppins())),
                   );
@@ -971,6 +1116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onTap: () {
                       showDialog(
                         context: context,
+<<<<<<< HEAD
                         barrierColor: Colors.transparent, // Allow blur effect to show through
                         builder: (context) => BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // 40% blur effect
@@ -1064,6 +1210,117 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ],
                               ),
                             ),
+=======
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        builder: (context) => Dialog(
+                          backgroundColor: isDarkMode ? DarkTheme.whiteColor : Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Stack(
+                            children: [
+                              BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                                child: Container(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Terms and Conditions for CRM Software",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDarkMode ? DarkTheme.textColor : Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    Flexible(
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            _buildTermsSection(
+                                              "1. Acceptance of Terms",
+                                              "By accessing or using CRM Software (\"Service\"), you agree to be bound by these Terms and Conditions (\"Terms\"). If you do not agree to these Terms, do not use the Service.",
+                                            ),
+                                            _buildTermsSection(
+                                              "2. Use of the Service",
+                                              "You may use the Service only in accordance with these Terms and applicable laws. You are responsible for maintaining the confidentiality of your account and credentials. You agree not to misuse the Service, attempt unauthorized access, or interfere with system functionality.",
+                                            ),
+                                            _buildTermsSection(
+                                              "3. User Data",
+                                              "You retain ownership of the data you upload or input into the CRM. You grant Your Company Name a limited license to use your data solely to provide and improve the Service. You are responsible for the legality, reliability, and accuracy of the data.",
+                                            ),
+                                            _buildTermsSection(
+                                              "4. Subscription and Payment",
+                                              "If the Service is offered under a subscription model, you agree to pay all fees as outlined. Non-payment may result in suspension or termination of access. Subscription fees are non-refundable except where required by law.",
+                                            ),
+                                            _buildTermsSection(
+                                              "5. Intellectual Property",
+                                              "All content, features, and functionality of the Service, including software, branding, and design, are the exclusive property of Your Company Name. You may not reproduce, modify, or distribute any part of the Service without express permission.",
+                                            ),
+                                            _buildTermsSection(
+                                              "6. Termination",
+                                              "We reserve the right to suspend or terminate your access to the Service at our discretion, with or without notice, if you violate these Terms or misuse the Service.",
+                                            ),
+                                            _buildTermsSection(
+                                              "7. Limitation of Liability",
+                                              "The Service is provided \"as is\" without warranties of any kind. Your Company Name is not liable for any indirect, incidental, or consequential damages arising from your use of the Service.",
+                                            ),
+                                            _buildTermsSection(
+                                              "8. Privacy",
+                                              "Your use of the Service is also governed by our Privacy Policy, which explains how we collect, store, and use your data.",
+                                            ),
+                                            _buildTermsSection(
+                                              "9. Modifications",
+                                              "We may modify these Terms at any time. Continued use of the Service after updates indicates your acceptance of the revised Terms.",
+                                            ),
+                                            _buildTermsSection(
+                                              "10. Governing Law",
+                                              "These Terms shall be governed by and construed in accordance with the laws of Insert Jurisdiction. Any disputes shall be resolved in the courts of Insert Jurisdiction.",
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: isDarkMode ? DarkTheme.primaryColor : Colors.purple,
+                                          foregroundColor: isDarkMode ? DarkTheme.textColor : Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                          child: Text(
+                                            "Close",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: isDarkMode ? DarkTheme.textColor : Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                           ),
                         ),
                       );
@@ -1076,7 +1333,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
+<<<<<<< HEAD
                           "Terms and Conditions",
+=======
+                          "Privacy Policy",
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                           style: GoogleFonts.poppins(
                             fontSize: 16,
                             color: isDarkMode ? DarkTheme.textColor : Colors.black,
@@ -1087,7 +1348,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
+<<<<<<< HEAD
                     "View our Terms and Conditions",
+=======
+                    "Terms and Conditions",
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: isDarkMode ? DarkTheme.textColor : Colors.grey[600],
@@ -1151,23 +1416,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildTermsSection(String title, String content) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Padding(
+<<<<<<< HEAD
       padding: const EdgeInsets.only(bottom: 8.0), // Reduced padding
+=======
+      padding: const EdgeInsets.only(bottom: 16.0),
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: GoogleFonts.poppins(
+<<<<<<< HEAD
               fontSize: 14, // Smaller font size
+=======
+              fontSize: 16,
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
               fontWeight: FontWeight.w600,
               color: isDarkMode ? DarkTheme.textColor : Colors.black,
             ),
           ),
+<<<<<<< HEAD
           const SizedBox(height: 2.0), // Reduced spacing
           Text(
             content,
             style: GoogleFonts.poppins(
               fontSize: 12, // Smaller font size
+=======
+          const SizedBox(height: 4.0),
+          Text(
+            content,
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
               color: isDarkMode ? DarkTheme.textColor : Colors.black87,
             ),
           ),
@@ -1175,4 +1456,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff

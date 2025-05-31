@@ -50,7 +50,11 @@ class MainLayout extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
+<<<<<<< HEAD
                           color: isDarkMode ? DarkTheme.textColor : Colors.black, // Text color adapts to theme
+=======
+                          color: Colors.black, // CRM text remains black
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                         ),
                       ),
                     ],
@@ -61,18 +65,28 @@ class MainLayout extends StatelessWidget {
                 _buildNavItem(context, 'Products', Icons.shopping_cart, const ProductsScreen(), currentPage == ProductsScreen, isDarkMode),
                 _buildNavItem(context, 'Enquiry', Icons.question_answer, const EnquiryScreen(), currentPage == EnquiryScreen, isDarkMode),
                 ExpansionTile(
+<<<<<<< HEAD
                   leading: Icon(
                     Icons.leaderboard,
                     color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.grey,
                   ),
+=======
+                  leading: const Icon(Icons.leaderboard, color: Colors.grey),
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                   title: Text(
                     'Leads',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
+<<<<<<< HEAD
                       color: isDarkMode ? DarkTheme.textColor : const Color(0xFF49454F),
                       backgroundColor: (currentPage == LeadsScreen || currentPage == QualifiedLeadsScreen || currentPage == BadLeadsScreen)
                           ? (isDarkMode ? DarkTheme.primaryColor.withOpacity(0.2) : const Color(0xFFE8DEF8))
+=======
+                      color: const Color(0xFF49454F), // Leads text color
+                      backgroundColor: (currentPage == LeadsScreen || currentPage == QualifiedLeadsScreen || currentPage == BadLeadsScreen)
+                          ? const Color(0xFFE8DEF8)
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
                           : null, // Background for selected Leads
                     ),
                   ),
@@ -114,6 +128,7 @@ class MainLayout extends StatelessWidget {
 
   Widget _buildNavItem(BuildContext context, String title, IconData icon, Widget destination, bool isActive, bool isDarkMode) {
     return ListTile(
+<<<<<<< HEAD
       leading: Icon(
         icon,
         color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.grey,
@@ -121,12 +136,22 @@ class MainLayout extends StatelessWidget {
       title: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         color: isActive ? (isDarkMode ? DarkTheme.primaryColor.withOpacity(0.2) : const Color(0xFFE8DEF8)) : null, // Background for selected item
+=======
+      leading: Icon(icon, color: Colors.grey), // Use the passed icon parameter
+      title: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        color: isActive ? const Color(0xFFE8DEF8) : null, // Background for selected item
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
         child: Text(
           title,
           style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.w500,
+<<<<<<< HEAD
             color: isDarkMode ? DarkTheme.textColor : const Color(0xFF49454F),
+=======
+            color: const Color(0xFF49454F), // Text color for all nav items
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
           ),
         ),
       ),
@@ -200,13 +225,21 @@ class MainLayout extends StatelessWidget {
     return ListTile(
       title: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+<<<<<<< HEAD
         color: isActive ? (isDarkMode ? DarkTheme.primaryColor.withOpacity(0.2) : const Color(0xFFE8DEF8)) : null, // Background for selected sub-item
+=======
+        color: isActive ? const Color(0xFFE8DEF8) : null, // Background for selected sub-item
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
         child: Text(
           title,
           style: GoogleFonts.poppins(
             fontSize: 14,
             fontWeight: FontWeight.w500,
+<<<<<<< HEAD
             color: isDarkMode ? DarkTheme.textColor : const Color(0xFF49454F),
+=======
+            color: const Color(0xFF49454F), // Text color for sub-nav items
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
           ),
         ),
       ),

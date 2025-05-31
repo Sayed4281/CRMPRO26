@@ -49,6 +49,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   cross_file:
     dependency: transitive
     description:
@@ -57,6 +61,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+2"
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   crypto:
     dependency: transitive
     description:
@@ -97,6 +106,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   file_picker:
     dependency: "direct main"
     description:
@@ -137,6 +150,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+4"
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   fl_chart:
     dependency: "direct main"
     description:
@@ -264,6 +282,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   image_picker:
     dependency: "direct main"
     description:
@@ -328,6 +350,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   intl:
     dependency: "direct main"
     description:
@@ -392,6 +419,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   mime:
     dependency: transitive
     description:
@@ -400,6 +431,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+>>>>>>> ff54e8a0f15e609eeda25e26cac90c1024284bff
   nested:
     dependency: transitive
     description:
