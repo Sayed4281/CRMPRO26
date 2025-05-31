@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
+import '../theme/dark_theme.dart'; // Import DarkTheme
 import 'sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -37,8 +38,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Sign-up successful! Please sign in.'),
+        SnackBar(
+          content: Text(
+            'Sign-up successful! Please sign in.',
+            style: GoogleFonts.poppins(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? DarkTheme.textColor
+                  : AppTheme.whiteColor,
+            ),
+          ),
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? DarkTheme.accentColor
+              : AppTheme.accentColor,
         ),
       );
       Navigator.pushReplacement(
@@ -53,8 +64,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Could not launch Google.'),
-          backgroundColor: AppTheme.errorColor,
+          content: Text(
+            'Could not launch Google.',
+            style: GoogleFonts.poppins(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? DarkTheme.textColor
+                  : AppTheme.whiteColor,
+            ),
+          ),
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? DarkTheme.errorColor
+              : AppTheme.errorColor,
         ),
       );
     }
@@ -62,13 +82,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: AppTheme.backgroundColor,
+      backgroundColor: isDarkMode ? DarkTheme.backgroundColor : AppTheme.backgroundColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth < 600) {
             return SingleChildScrollView(
-              child: _buildForm(context, constraints.maxWidth),
+              child: _buildForm(context, constraints.maxWidth, isDarkMode),
             );
           } else {
             return Row(
@@ -77,17 +98,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   flex: 2,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    color: AppTheme.backgroundColor,
+                    color: isDarkMode ? DarkTheme.backgroundColor : AppTheme.backgroundColor,
                     child: Center(
                       child: SizedBox(
                         width: 450,
-                  height: 450, // Matches SignInScreen.dart
+                        height: 450,
                         child: Image.asset(
                           'assets/images/signin_image.jpg',
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) => Icon(
                             Icons.error,
-                            color: AppTheme.errorColor,
+                            color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                             size: 40,
                           ),
                         ),
@@ -99,9 +120,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   flex: 1,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    color: AppTheme.whiteColor,
+                    color: isDarkMode ? DarkTheme.whiteColor : AppTheme.whiteColor,
                     child: SingleChildScrollView(
-                      child: _buildForm(context, 350),
+                      child: _buildForm(context, 350, isDarkMode),
                     ),
                   ),
                 ),
@@ -113,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildForm(BuildContext context, double maxWidth) {
+  Widget _buildForm(BuildContext context, double maxWidth, bool isDarkMode) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
@@ -128,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
-                  color: AppTheme.textColor,
+                  color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                 ),
               ),
               const SizedBox(height: 24),
@@ -144,13 +165,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppTheme.textColor,
+                          color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: '*',
                             style: TextStyle(
-                              color: AppTheme.errorColor,
+                              color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                               fontSize: 14,
                             ),
                           ),
@@ -160,12 +181,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Enter your name',
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? DarkTheme.secondaryTextColor
+                              : AppTheme.secondaryTextColor,
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? DarkTheme.whiteColor.withOpacity(0.1)
+                            : AppTheme.whiteColor.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                      ),
                       validator: (value) =>
-                          value == null || value.isEmpty ? 'Enter your name' : null,
+                      value == null || value.isEmpty ? 'Enter your name' : null,
                     ),
                     const SizedBox(height: 16),
                     // Email
@@ -175,13 +212,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppTheme.textColor,
+                          color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: '*',
                             style: TextStyle(
-                              color: AppTheme.errorColor,
+                              color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                               fontSize: 14,
                             ),
                           ),
@@ -191,10 +228,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Enter email',
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? DarkTheme.secondaryTextColor
+                              : AppTheme.secondaryTextColor,
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? DarkTheme.whiteColor.withOpacity(0.1)
+                            : AppTheme.whiteColor.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                      ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.isEmpty) return 'Enter an email';
@@ -212,13 +265,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppTheme.textColor,
+                          color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: '*',
                             style: TextStyle(
-                              color: AppTheme.errorColor,
+                              color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                               fontSize: 14,
                             ),
                           ),
@@ -228,10 +281,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _phoneController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Enter phone number',
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? DarkTheme.secondaryTextColor
+                              : AppTheme.secondaryTextColor,
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? DarkTheme.whiteColor.withOpacity(0.1)
+                            : AppTheme.whiteColor.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                      ),
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null || value.isEmpty) return 'Enter a phone number';
@@ -249,13 +318,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppTheme.textColor,
+                          color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: '*',
                             style: TextStyle(
-                              color: AppTheme.errorColor,
+                              color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                               fontSize: 14,
                             ),
                           ),
@@ -265,10 +334,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Enter password',
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? DarkTheme.secondaryTextColor
+                              : AppTheme.secondaryTextColor,
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? DarkTheme.whiteColor.withOpacity(0.1)
+                            : AppTheme.whiteColor.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                      ),
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) return 'Enter a password';
@@ -284,13 +369,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppTheme.textColor,
+                          color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: '*',
                             style: TextStyle(
-                              color: AppTheme.errorColor,
+                              color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                               fontSize: 14,
                             ),
                           ),
@@ -300,10 +385,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _confirmPasswordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Re-enter password',
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? DarkTheme.secondaryTextColor
+                              : AppTheme.secondaryTextColor,
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? DarkTheme.whiteColor.withOpacity(0.1)
+                            : AppTheme.whiteColor.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                      ),
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) return 'Confirm your password';
@@ -315,21 +416,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 24),
                     _isLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? Center(
+                      child: CircularProgressIndicator(
+                        color: isDarkMode ? DarkTheme.accentColor : AppTheme.accentColor,
+                      ),
+                    )
                         : SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: _signUp,
-                              style: Theme.of(context).elevatedButtonTheme.style,
-                              child: Text(
-                                'Sign Up',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _signUp,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isDarkMode
+                              ? DarkTheme.primaryColor
+                              : AppTheme.primaryColor,
+                          foregroundColor: isDarkMode
+                              ? DarkTheme.textColor
+                              : AppTheme.whiteColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
+                        ),
+                        child: Text(
+                          'Sign Up',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     Center(
                       child: Row(
@@ -340,7 +456,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: GoogleFonts.poppins(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: AppTheme.secondaryTextColor,
+                              color: isDarkMode
+                                  ? DarkTheme.secondaryTextColor
+                                  : AppTheme.secondaryTextColor,
                             ),
                           ),
                           TextButton(
@@ -353,7 +471,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: AppTheme.accentColor,
+                                color: isDarkMode ? DarkTheme.accentColor : AppTheme.accentColor,
                               ),
                             ),
                           ),
@@ -363,7 +481,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Expanded(child: Divider()),
+                        Expanded(
+                          child: Divider(
+                            color: isDarkMode
+                                ? DarkTheme.secondaryTextColor
+                                : AppTheme.secondaryTextColor,
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
@@ -371,11 +495,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: GoogleFonts.poppins(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: AppTheme.secondaryTextColor,
+                              color: isDarkMode
+                                  ? DarkTheme.secondaryTextColor
+                                  : AppTheme.secondaryTextColor,
                             ),
                           ),
                         ),
-                        const Expanded(child: Divider()),
+                        Expanded(
+                          child: Divider(
+                            color: isDarkMode
+                                ? DarkTheme.secondaryTextColor
+                                : AppTheme.secondaryTextColor,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -389,7 +521,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 24,
                           errorBuilder: (context, error, stackTrace) => Icon(
                             Icons.error,
-                            color: AppTheme.errorColor,
+                            color: isDarkMode ? DarkTheme.errorColor : AppTheme.errorColor,
                             size: 24,
                           ),
                         ),
@@ -398,10 +530,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: AppTheme.textColor,
+                            color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                           ),
                         ),
-                        style: Theme.of(context).textButtonTheme.style,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: isDarkMode
+                              ? DarkTheme.textColor
+                              : AppTheme.textColor,
+                          side: BorderSide(
+                            color: isDarkMode
+                                ? DarkTheme.secondaryTextColor
+                                : AppTheme.secondaryTextColor,
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                       ),
                     ),
                   ],
