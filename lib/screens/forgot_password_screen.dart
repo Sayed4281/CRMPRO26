@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../theme/app_theme.dart';
+import '../theme/dark_theme.dart'; // Import DarkTheme
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -37,7 +39,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (_passwordFormKey.currentState!.validate()) {
       // Implement password reset logic here (e.g., via AuthProvider)
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password reset successfully')),
+        SnackBar(
+          content: Text(
+            'Password reset successfully',
+            style: GoogleFonts.poppins(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? DarkTheme.textColor
+                  : AppTheme.whiteColor,
+            ),
+          ),
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? DarkTheme.accentColor
+              : AppTheme.accentColor,
+        ),
       );
       Navigator.pop(context); // Return to SignInScreen
     }
@@ -45,25 +59,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F6FF), // Matches SignInScreen background
+      backgroundColor: isDarkMode ? DarkTheme.backgroundColor : AppTheme.backgroundColor,
       body: Center(
         child: Card(
           elevation: 8,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
+          color: isDarkMode ? DarkTheme.whiteColor : AppTheme.whiteColor,
           child: Container(
             width: 400,
             padding: const EdgeInsets.all(24.0),
-            child: _isEmailStep ? _buildEmailForm() : _buildPasswordForm(),
+            child: _isEmailStep ? _buildEmailForm(isDarkMode) : _buildPasswordForm(isDarkMode),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildEmailForm() {
+  Widget _buildEmailForm(bool isDarkMode) {
     return Form(
       key: _emailFormKey,
       child: Column(
@@ -74,7 +90,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF1A1A1A),
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
             ),
             textAlign: TextAlign.center,
           ),
@@ -85,19 +101,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               labelText: 'Email',
               hintText: 'Enter email',
               filled: true,
-              fillColor: const Color(0xFFF5F5F5),
+              fillColor: isDarkMode
+                  ? DarkTheme.whiteColor.withOpacity(0.1)
+                  : AppTheme.whiteColor.withOpacity(0.1),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide.none,
               ),
               hintStyle: GoogleFonts.poppins(
-                color: const Color(0xFFA0A0A0),
+                color: isDarkMode ? DarkTheme.secondaryTextColor : AppTheme.secondaryTextColor,
                 fontSize: 14,
               ),
               labelStyle: GoogleFonts.poppins(
-                color: const Color(0xFF1A1A1A),
+                color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                 fontSize: 14,
               ),
+            ),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
@@ -116,7 +138,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: ElevatedButton(
               onPressed: _submitEmail,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF5B2D87),
+                backgroundColor: isDarkMode ? DarkTheme.primaryColor : AppTheme.primaryColor,
+                foregroundColor: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -126,7 +149,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 'Reset Password',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
-                  color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -137,7 +159,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget _buildPasswordForm() {
+  Widget _buildPasswordForm(bool isDarkMode) {
     return Form(
       key: _passwordFormKey,
       child: Column(
@@ -148,7 +170,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF1A1A1A),
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
             ),
             textAlign: TextAlign.center,
           ),
@@ -159,19 +181,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               labelText: 'Password',
               hintText: 'Enter password',
               filled: true,
-              fillColor: const Color(0xFFF5F5F5),
+              fillColor: isDarkMode
+                  ? DarkTheme.whiteColor.withOpacity(0.1)
+                  : AppTheme.whiteColor.withOpacity(0.1),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide.none,
               ),
               hintStyle: GoogleFonts.poppins(
-                color: const Color(0xFFA0A0A0),
+                color: isDarkMode ? DarkTheme.secondaryTextColor : AppTheme.secondaryTextColor,
                 fontSize: 14,
               ),
               labelStyle: GoogleFonts.poppins(
-                color: const Color(0xFF1A1A1A),
+                color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                 fontSize: 14,
               ),
+            ),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
             ),
             obscureText: true,
             validator: (value) {
@@ -191,19 +219,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               labelText: 'Confirm Password',
               hintText: 'Re-Enter password',
               filled: true,
-              fillColor: const Color(0xFFF5F5F5),
+              fillColor: isDarkMode
+                  ? DarkTheme.whiteColor.withOpacity(0.1)
+                  : AppTheme.whiteColor.withOpacity(0.1),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide.none,
               ),
               hintStyle: GoogleFonts.poppins(
-                color: const Color(0xFFA0A0A0),
+                color: isDarkMode ? DarkTheme.secondaryTextColor : AppTheme.secondaryTextColor,
                 fontSize: 14,
               ),
               labelStyle: GoogleFonts.poppins(
-                color: const Color(0xFF1A1A1A),
+                color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                 fontSize: 14,
               ),
+            ),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
             ),
             obscureText: true,
             validator: (value) {
@@ -222,7 +256,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: ElevatedButton(
               onPressed: _resetPassword,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF5B2D87),
+                backgroundColor: isDarkMode ? DarkTheme.primaryColor : AppTheme.primaryColor,
+                foregroundColor: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -232,7 +267,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 'Submit',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
-                  color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -247,7 +281,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               'Back to Log In',
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: const Color(0xFF007AFF),
+                color: isDarkMode ? DarkTheme.accentColor : AppTheme.accentColor,
               ),
             ),
           ),

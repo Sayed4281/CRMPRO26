@@ -21,6 +21,7 @@ class AppTheme {
         primary: primaryColor,
         secondary: accentColor,
         error: errorColor,
+        brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().copyWith(
         bodyLarge: const TextStyle(color: textColor),
@@ -65,7 +66,7 @@ class AppTheme {
           color: secondaryTextColor,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: whiteColor,
         elevation: 2,
         shape: RoundedRectangleBorder(

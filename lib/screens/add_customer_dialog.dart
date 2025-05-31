@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../theme/app_theme.dart';
+import '../theme/dark_theme.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   final List<String> customerNames;
@@ -27,7 +29,6 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   late TextEditingController _addressController;
   late TextEditingController _designationController;
   late TextEditingController _locationController;
-  String _status = 'Active';
 
   @override
   void initState() {
@@ -53,11 +54,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     super.dispose();
   }
 
-  // Function to generate a unique Customer ID
   String _generateCustomerId() {
     int nextId = widget.customers.length + 1;
     String customerId = 'CUST-${nextId.toString().padLeft(4, '0')}';
-    // Ensure uniqueness by checking existing IDs
     while (widget.customers.any((customer) => customer['customerId'] == customerId)) {
       nextId++;
       customerId = 'CUST-${nextId.toString().padLeft(4, '0')}';
@@ -67,316 +66,283 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Add Customer',
-                        style: GoogleFonts.poppins(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close, size: 18),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Customer Name',
-                      hintText: 'Enter Customer name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFF6C5DD3)),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a customer name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: _companyController,
-                    decoration: InputDecoration(
-                      labelText: 'Company',
-                      hintText: 'Enter Company name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFF6C5DD3)),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a company name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _phoneController,
-                          decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            hintText: 'Enter Phone number',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFFD9D9D9)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFF6C5DD3)),
-                            ),
-                          ),
-                          keyboardType: TextInputType.phone,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a phone number';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            hintText: 'Enter Email',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFFD9D9D9)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFF6C5DD3)),
-                            ),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              final emailRegExp =
-                              RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                              if (!emailRegExp.hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: InputDecoration(
-                      labelText: 'Address',
-                      hintText: 'Enter Address',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFF6C5DD3)),
-                      ),
-                    ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _designationController,
-                          decoration: InputDecoration(
-                            labelText: 'Designation',
-                            hintText: 'Enter Designation',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFFD9D9D9)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFF6C5DD3)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _locationController,
-                          decoration: InputDecoration(
-                            labelText: 'Location',
-                            hintText: 'Enter Location',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFFD9D9D9)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                              const BorderSide(color: Color(0xFF6C5DD3)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  DropdownButtonFormField<String>(
-                    value: _status,
-                    decoration: InputDecoration(
-                      labelText: 'Status',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Color(0xFF6C5DD3)),
-                      ),
-                    ),
-                    items: ['Active', 'Inactive'].map((String status) {
-                      return DropdownMenuItem<String>(
-                        value: status,
-                        child: Text(status, style: GoogleFonts.poppins()),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _status = value!;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text(
-                          'Cancel',
-                          style: GoogleFonts.poppins(
-                            color: const Color(0xFF6C5DD3),
-                            fontSize: 14,
-                          ),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.grey.shade200,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            final newCustomer = {
-                              'index': (widget.customers.length + 1)
-                                  .toString()
-                                  .padLeft(2, '0'),
-                              'name': _nameController.text,
-                              'customerId': _generateCustomerId(), // Auto-generated Customer ID
-                              'company': _companyController.text,
-                              'phone': _phoneController.text,
-                              'email': _emailController.text,
-                              'address': _addressController.text,
-                              'designation': _designationController.text,
-                              'location': _locationController.text,
-                              'status': _status,
-                            };
-                            widget.onSave(newCustomer);
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Customer added successfully',
-                                  style: GoogleFonts.poppins(fontSize: 14),
-                                ),
-                                backgroundColor: Colors.green,
-                                duration: const Duration(seconds: 2),
-                              ),
-                            );
-                          }
-                        },
-                        child: Text(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 700,
+          height: 680, // Reduced height since we removed the status field
+          decoration: BoxDecoration(
+            color: isDarkMode ? DarkTheme.backgroundColor : AppTheme.whiteColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(60),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
                           'Add Customer',
                           style: GoogleFonts.poppins(
-                              color: Colors.white, fontSize: 14),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                          ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF6C5DD3),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            size: 18,
+                            color: isDarkMode ? DarkTheme.textColor : Colors.black,
+                          ),
+                          onPressed: () => Navigator.pop(context),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    _buildLabeledTextField('Customer Name', _nameController, isDarkMode, validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Customer Name is required';
+                      }
+                      return null;
+                    }),
+
+                    const SizedBox(height: 16),
+
+                    _buildLabeledTextField('Company', _companyController, isDarkMode, validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Company is required';
+                      }
+                      return null;
+                    }),
+
+                    const SizedBox(height: 16),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildLabeledTextField(
+                            'Phone Number',
+                            _phoneController,
+                            isDarkMode,
+                            isNumber: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Phone Number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildLabeledTextField(
+                            'Email',
+                            _emailController,
+                            isDarkMode,
+                            validator: (value) {
+                              if (value != null && value.isNotEmpty) {
+                                final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                                if (!emailRegExp.hasMatch(value)) {
+                                  return 'Please enter a valid email';
+                                }
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Address',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        SizedBox(
+                          height: 90,
+                          child: TextFormField(
+                            controller: _addressController,
+                            minLines: 3,
+                            maxLines: 3,
+                            decoration: _inputDecoration('Enter Address', isDarkMode),
+                            style: GoogleFonts.poppins(
+                              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildLabeledTextField('Designation', _designationController, isDarkMode),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildLabeledTextField('Location', _locationController, isDarkMode),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isDarkMode ? DarkTheme.whiteColor.withOpacity(0.2) : const Color(0xFFD9C9F4),
+                            foregroundColor: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              final newCustomer = {
+                                'sino': (widget.customers.length + 1).toString().padLeft(2, '0'),
+                                'name': _nameController.text,
+                                'customerId': _generateCustomerId(),
+                                'company': _companyController.text,
+                                'phone': _phoneController.text,
+                                'email': _emailController.text,
+                                'address': _addressController.text,
+                                'designation': _designationController.text,
+                                'location': _locationController.text,
+                                // Removed the status field
+                              };
+                              widget.onSave(newCustomer);
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Customer added successfully',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
+                                    ),
+                                  ),
+                                  backgroundColor: isDarkMode ? DarkTheme.accentColor : Colors.green,
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isDarkMode ? DarkTheme.primaryColor : AppTheme.primaryColor,
+                            foregroundColor: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          ),
+                          child: Text(
+                            'Add Customer',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
           ),
         ),
       ),
+    );
+  }
+
+  InputDecoration _inputDecoration(String hint, bool isDarkMode) {
+    return InputDecoration(
+      hintText: hint,
+      filled: true,
+      fillColor: isDarkMode ? DarkTheme.whiteColor.withOpacity(0.2) : Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: isDarkMode ? DarkTheme.textColor.withOpacity(0.3) : AppTheme.textColor.withOpacity(0.3),
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: isDarkMode ? DarkTheme.textColor.withOpacity(0.3) : AppTheme.textColor.withOpacity(0.3),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: isDarkMode ? DarkTheme.accentColor : AppTheme.primaryColor,
+        ),
+      ),
+      hintStyle: GoogleFonts.poppins(
+        fontSize: 14,
+        color: isDarkMode ? DarkTheme.secondaryTextColor : Colors.grey,
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    );
+  }
+
+  Widget _buildLabeledTextField(
+      String label,
+      TextEditingController controller,
+      bool isDarkMode, {
+        bool isNumber = false,
+        String? Function(String?)? validator,
+      }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 40,
+          child: TextFormField(
+            controller: controller,
+            decoration: _inputDecoration('Enter $label', isDarkMode),
+            style: GoogleFonts.poppins(
+              color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+            ),
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+            validator: validator,
+          ),
+        ),
+      ],
     );
   }
 }
