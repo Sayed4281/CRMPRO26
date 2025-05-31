@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'main_layout.dart';
+
+class ViewVisitScreen extends StatelessWidget {
+  final String name;
+  final String visitId;
+  final String visitType;
+
+  const ViewVisitScreen({
+    super.key,
+    required this.name,
+    required this.visitId,
+    required this.visitType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MainLayout(
+      currentPage: ViewVisitScreen,
+      content: Container(
+        color: const Color(0xFFFFFFFF),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Breadcrumb
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context); // Go back to VisitsScreen
+                    },
+                    child: Text(
+                      'Visits',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: const Color.fromARGB(255, 1, 7, 12),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    ' > View Visit',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: const Color.fromARGB(255, 1, 7, 12),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Title
+              Text(
+                'View Visit Details',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Visit Details
+              Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: const BorderSide(color: Color(0xFFD9D9D9)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Name: $name',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Visit ID: $visitId',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Visit Type: $visitType',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Back Button
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Go back to VisitsScreen
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C5DD3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                  child: Text(
+                    'Back',
+                    style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
