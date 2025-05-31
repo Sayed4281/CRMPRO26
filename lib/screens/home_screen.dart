@@ -1,451 +1,569 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'dart:math';
+import 'package:intl/intl.dart';
+import 'dart:ui';
 import 'main_layout.dart';
+import 'package:crmpro26/screens/visits_screen.dart';
+import 'enquiry_screen.dart';
+import 'leads_screen.dart';
+import 'calls_screen.dart';
+import 'add_edit_visit_dialog.dart';
+import 'add_enquiry_dialog.dart';
+import 'add_call_dialog.dart';
+import 'add_customer_dialog.dart';
+import 'reports_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String selectedChart = 'Enquiries';
+  String selectedRange = 'Daily';
+  int chartOffset = 0;
+  DateTime? selectedDate;
+
+  final Map<String, List<String>> chartLabels = {
+    'Enquiries': ['Validated', 'Closed'],
+    'Visits': [
+      'New',
+      'FollowUp',
+      'Demo',
+      'Installation',
+      'Training',
+      'Service',
+      'Payments'
+    ],
+    'Leads': [
+      'Demo Completed',
+      'Demo Scheduled',
+      'Waiting',
+      'Discussion',
+      'Quotation',
+      'Submitted'
+    ],
+    'Calls': ['Active', 'Inactive'],
+    'Customers': ['Active', 'Inactive'],
+    'Product': ['InStock', 'OutOfStock'],
+  };
+
+  final List<Color> purpleShades = List.generate(
+    7,
+        (i) => Colors.deepPurple[(i + 1) * 100]!,
+  );
+
+  final DateFormat _dateFormat = DateFormat("MMM d");
+
+  @override
   Widget build(BuildContext context) {
-    return MainLayout(
-      currentPage: HomeScreen,
-      content: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome!',
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      backgroundColor: Colors.deepPurple.shade100,
+      body: MainLayout(
+        currentPage: HomeScreen,
+        content: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildStatCard('Enquiries', '678', Icons.question_answer),
-                _buildStatCard('Leads', '347', Icons.leaderboard),
+                _buildHeader(),
+                const SizedBox(height: 32),
+                _buildStatsCards(),
+                const SizedBox(height: 32),
+                _buildQuickActions(context),
+                const SizedBox(height: 32),
+                _buildReportRedirect(),
+                const SizedBox(height: 32),
+                _buildOverviewSection(),
               ],
             ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildStatCard('Visits', '650', Icons.event),
-                _buildStatCard('Calls', '478', Icons.phone),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Quick Actions',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildActionButton(context, 'Add Customer', Icons.person_add, () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Add Customer functionality not implemented yet.')),
-                  );
-                }),
-                _buildActionButton(context, 'Add Enquiry', Icons.question_answer, () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Add Enquiry functionality not implemented yet.')),
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildActionButton(context, 'Log Call', Icons.phone, () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Log Call functionality not implemented yet.')),
-                  );
-                }),
-                _buildActionButton(context, 'Schedule Visit', Icons.event, () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Schedule Visit functionality not implemented yet.')),
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Report Summary',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildOverviewCard('Enquiries Today', '62'),
-                _buildOverviewCard('Visits Today', '12'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildOverviewCard('Leads Today', '30'),
-                _buildOverviewCard('Calls Today', '30'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'View Report',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        DropdownButton<String>(
-                          value: 'Daily',
-                          items: const [
-                            DropdownMenuItem(value: 'Daily', child: Text('Daily')),
-                            DropdownMenuItem(value: 'Weekly', child: Text('Weekly')),
-                            DropdownMenuItem(value: 'Monthly', child: Text('Monthly')),
-                          ],
-                          onChanged: (value) {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 200,
-                      child: BarChart(
-                        BarChartData(
-                          alignment: BarChartAlignment.spaceAround,
-                          maxY: 100,
-                          barGroups: [
-                            _buildBarGroup(15, 40, 20),
-                            _buildBarGroup(16, 60, 30),
-                            _buildBarGroup(17, 50, 25),
-                            _buildBarGroup(18, 30, 15),
-                            _buildBarGroup(19, 70, 35),
-                            _buildBarGroup(20, 80, 40),
-                            _buildBarGroup(21, 60, 30),
-                            _buildBarGroup(22, 50, 25),
-                            _buildBarGroup(23, 40, 20),
-                            _buildBarGroup(24, 30, 15),
-                            _buildBarGroup(25, 20, 10),
-                            _buildBarGroup(26, 10, 5),
-                          ],
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  return Text(
-                                    'Apr ${value.toInt()}',
-                                    style: GoogleFonts.poppins(fontSize: 12),
-                                  );
-                                },
-                              ),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                getTitlesWidget: (value, meta) {
-                                  return Text(
-                                    value.toInt().toString(),
-                                    style: GoogleFonts.poppins(fontSize: 12),
-                                  );
-                                },
-                              ),
-                            ),
-                            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          gridData: const FlGridData(show: false),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              color: const Color(0xFFCE93D8),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Validated',
-                              style: GoogleFonts.poppins(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 16),
-                        Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              color: const Color(0xFF7B1FA2),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Closed',
-                              style: GoogleFonts.poppins(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Sales Report',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            _buildTimeFilterButton('Day', false),
-                            _buildTimeFilterButton('Week', false),
-                            _buildTimeFilterButton('Month', false),
-                            _buildTimeFilterButton('Year', true),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 200,
-                      child: LineChart(
-                        LineChartData(
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: [
-                                const FlSpot(0, 1.5),
-                                const FlSpot(1, 1.8),
-                                const FlSpot(2, 1.2),
-                                const FlSpot(3, 2.13),
-                              ],
-                              isCurved: true,
-                              color: const Color(0xFF7B1FA2),
-                              dotData: const FlDotData(show: false),
-                            ),
-                          ],
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  const labels = ['Mar', 'Apr', 'May', 'Jun'];
-                                  return Text(
-                                    labels[value.toInt()],
-                                    style: GoogleFonts.poppins(fontSize: 12),
-                                  );
-                                },
-                              ),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                getTitlesWidget: (value, meta) {
-                                  return Text(
-                                    '${value}K',
-                                    style: GoogleFonts.poppins(fontSize: 12),
-                                  );
-                                },
-                              ),
-                            ),
-                            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          gridData: const FlGridData(show: false),
-                          minY: 0,
-                          maxY: 3,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildStatCard(String title, String count, IconData icon) {
-    return Expanded(
-      child: Card(
-        color: const Color(0xFFF3E5F5), // Light purple background
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Icon(icon, color: Colors.black),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    count,
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
+  Widget _buildHeader() => Text(
+    'Welcome!',
+    style: GoogleFonts.poppins(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+
+  Widget _buildStatsCards() {
+    List<Map<String, dynamic>> stats = [
+      {
+        'title': 'Enquiries',
+        'value': '678',
+        'icon': Icons.question_answer,
+        'screen': const EnquiryScreen(),
+      },
+      {
+        'title': 'Leads',
+        'value': '347',
+        'icon': Icons.leaderboard,
+        'screen': const LeadsScreen(),
+      },
+      {
+        'title': 'Visits',
+        'value': '650',
+        'icon': Icons.event,
+        'screen': const VisitsScreen(),
+      },
+      {
+        'title': 'Calls',
+        'value': '478',
+        'icon': Icons.phone,
+        'screen': const CallsScreen(),
+      },
+    ];
+
+    return Wrap(
+      spacing: 16,
+      runSpacing: 16,
+      children: stats.map((item) {
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => item['screen']),
+              );
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              width: 250,
+              height: 150,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 247, 243, 252),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    // ignore: deprecated_member_use
+                    color: Colors.deepPurple.withOpacity(0.1),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton(BuildContext context, String title, IconData icon, VoidCallback onPressed) {
-    return Expanded(
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF7B1FA2), // Purple button color
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: GoogleFonts.poppins(fontSize: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(item['icon'], size: 24, color: Colors.deepPurple),
+                  const SizedBox(height: 8),
+                  Text(item['title'],
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, fontWeight: FontWeight.bold)),
+                  Text(item['value'],
+                      style: GoogleFonts.poppins(
+                          fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text('Total', style: GoogleFonts.poppins(fontSize: 12)),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOverviewCard(String title, String count) {
-    return Expanded(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                count,
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-            ],
           ),
-        ),
-      ),
+        );
+      }).toList(),
     );
   }
 
-  BarChartGroupData _buildBarGroup(int x, double validated, double closed) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: validated,
-          color: const Color(0xFFCE93D8), // Light purple for Validated
-          width: 8,
+  Widget _buildQuickActions(BuildContext context) {
+    List<Map<String, dynamic>> actions = [
+      {
+        'label': 'Add Customer',
+        'icon': Icons.person_add,
+        // No screen for this — handled with a dialog
+      },
+      {
+        'label': 'Add Enquiry',
+        'icon': Icons.question_answer,
+        // No screen for this — handled with a dialog
+      },
+      {
+        'label': 'Log Call',
+        'icon': Icons.phone,
+        // No screen for this — handled with a dialog
+      },
+      {
+        'label': 'Schedule Visit',
+        'icon': Icons.event,
+        // No screen for this — handled with a dialog
+      },
+    ];
+
+    void _showScheduleVisitDialog() {
+      showDialog(
+        context: context,
+        barrierColor: Colors.transparent, // Glass effect
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              backgroundColor:
+              Colors.white.withOpacity(0.9), // Glass-like dialog
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                  maxHeight: 600,
+                ),
+                child: AddEditVisitDialog(
+                  customerNames: const [], // Replace with actual list
+                  visits: const [], // Replace with actual data
+                  onSave: (visit, [index]) {
+                    // Handle save logic
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Quick Actions',
+          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
         ),
-        BarChartRodData(
-          toY: closed,
-          color: const Color(0xFF7B1FA2), // Dark purple for Closed
-          width: 8,
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: actions.map((item) {
+            return MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: ElevatedButton.icon(
+                icon: Icon(item['icon']),
+                label: Text(item['label']),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF7B1FA2),
+                  foregroundColor: Colors.white,
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                ),
+                onPressed: () {
+                  if (item['label'] == 'Schedule Visit') {
+                    _showScheduleVisitDialog();
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => item['screen']),
+                    );
+                  }
+                },
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
   }
 
-  Widget _buildTimeFilterButton(String label, bool isSelected) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-          backgroundColor: isSelected ? const Color(0xFFF3E5F5) : Colors.white,
-          side: const BorderSide(color: Colors.grey),
-        ),
-        child: Text(
-          label,
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            color: Colors.black,
+  Widget _buildReportRedirect() {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ReportsScreen()),
+          );
+        },
+        child: Container(
+          width: 300,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3E5F5),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              /// Left section (icon + title)
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.bar_chart, size: 28),
+                    const SizedBox(width: 12),
+
+                    /// Make text wrap or ellipsize if needed
+                    Expanded(
+                      child: Text(
+                        'Report Summary',
+                        style: GoogleFonts.poppins(fontSize: 18),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              /// Right chevron icon
+              const Icon(Icons.chevron_right),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildOverviewTile(String title, String value) {
+    return SizedBox(
+      width: 180,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: GoogleFonts.poppins(
+                      fontSize: 14, fontWeight: FontWeight.w500)),
+              const SizedBox(height: 8),
+              Text(value,
+                  style: GoogleFonts.poppins(
+                      fontSize: 22, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLegend(List<String> labels, List<Color> colors) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: labels
+          .asMap()
+          .entries
+          .map((entry) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            Container(
+              width: 12,
+              height: 12,
+              color: colors[entry.key % colors.length],
+            ),
+            const SizedBox(width: 4),
+            Text(entry.value),
+          ],
+        ),
+      ))
+          .toList(),
+    );
+  }
+
+  Widget _buildOverviewSection() {
+    final chartOptions = chartLabels.keys.toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Overview${selectedDate != null ? ' - ${_dateFormat.format(selectedDate!)}' : ''}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis, // Shrink long text
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2030),
+                    );
+                    if (picked != null) {
+                      setState(() => selectedDate = picked);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple.shade400,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Select Date'),
+                ),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  value: selectedRange,
+                  items: ['Daily', 'Monthly', 'Yearly']
+                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .toList(),
+                  onChanged: (val) =>
+                      setState(() => selectedRange = val ?? 'Daily'),
+                ),
+              ],
+            ),
+          ],
+        ),
+        _buildLegend(chartLabels[selectedChart]!, purpleShades),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: [
+            _buildOverviewTile('Enquiries Today', '62'),
+            _buildOverviewTile('Visits Today', '12'),
+            _buildOverviewTile('Leads Today', '30'),
+            _buildOverviewTile('Calls Today', '30'),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: chartOptions.map((option) {
+              final isSelected = selectedChart == option;
+
+              return Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedChart = option;
+                    });
+                  },
+                  child: Text(
+                    option,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight:
+                      isSelected ? FontWeight.w600 : FontWeight.normal,
+                      color: isSelected ? Colors.black : Colors.grey,
+                      decoration: isSelected ? TextDecoration.underline : null,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () {
+                  if (chartOffset > 0) setState(() => chartOffset--);
+                },
+                icon: const Icon(Icons.arrow_back)),
+            IconButton(
+                onPressed: () => setState(() => chartOffset++),
+                icon: const Icon(Icons.arrow_forward)),
+          ],
+        ),
+        SizedBox(
+          height: 320,
+          child: BarChart(
+            BarChartData(
+              alignment: BarChartAlignment.spaceAround,
+              maxY: 30,
+              barGroups: List.generate(10, (i) {
+                final isDense = chartLabels[selectedChart]!.length > 5;
+                return BarChartGroupData(
+                  x: i,
+                  barRods:
+                  List.generate(chartLabels[selectedChart]!.length, (j) {
+                    return BarChartRodData(
+                      toY: Random().nextInt(30).toDouble(),
+                      color: purpleShades[j % purpleShades.length],
+                      width: isDense ? 10 : 24,
+                      borderRadius: BorderRadius.circular(6),
+                    );
+                  }),
+                  showingTooltipIndicators: [],
+                );
+              }),
+              titlesData: FlTitlesData(
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (value, _) {
+                      int intVal = value.toInt();
+                      if (selectedRange == 'Yearly') {
+                        return Text('${2020 + intVal + chartOffset}');
+                      } else if (selectedRange == 'Monthly') {
+                        const months = [
+                          'Jan',
+                          'Feb',
+                          'Mar',
+                          'Apr',
+                          'May',
+                          'Jun',
+                          'Jul',
+                          'Aug',
+                          'Sep',
+                          'Oct',
+                          'Nov',
+                          'Dec'
+                        ];
+                        return Text(months[(intVal + chartOffset) % 12]);
+                      }
+                      return Text(_dateFormat.format(
+                          DateTime(2025, 4, intVal + 1 + chartOffset * 10)));
+                    },
+                  ),
+                ),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, _) => Text('${value.toInt()}')),
+                ),
+                topTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              ),
+              gridData: const FlGridData(show: false),
+              borderData: FlBorderData(show: false),
+              barTouchData: BarTouchData(
+                enabled: true,
+                touchTooltipData: BarTouchTooltipData(
+                  tooltipPadding: const EdgeInsets.all(8),
+                  tooltipRoundedRadius: 8,
+                  tooltipBorder: BorderSide.none,
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                    final label = chartLabels[selectedChart]![rodIndex];
+                    return BarTooltipItem(
+                      '$label: ${rod.toY.toStringAsFixed(1)}',
+                      const TextStyle(color: Colors.black),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

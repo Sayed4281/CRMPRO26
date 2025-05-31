@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTheme {
-  static const Color primaryColor = Color(0xFF6B4E9A);
-  static const Color accentColor = Color(0xFF007AFF);
-  static const Color backgroundColor = Color(0xFFF7F6FF);
-  static const Color whiteColor = Color(0xFFFFFFFF);
-  static const Color textColor = Color(0xFF1A1A1A);
-  static const Color secondaryTextColor = Color(0xFFA0A0A0);
-  static const Color sidebarColor = Color(0xFF2C2C2C);
-  static const Color errorColor = Color(0xFFFF3B30);
+class DarkTheme {
+  static const Color primaryColor = Color(0xFF7C3AED); // Vibrant purple
+  static const Color accentColor = Color(0xFF2DD4BF); // Calming teal
+  static const Color backgroundColor = Color(0xFF121212); // Dark background
+  static const Color whiteColor = Color(0xFF1E1E1E); // Dark gray for surfaces
+  static const Color textColor = Color(0xFFFFFFFF); // Pure white text
+  static const Color secondaryTextColor = Color(0xFFFFFFFF); // Pure white for secondary text
+  static const Color sidebarColor = Color(0xFF1E1E1E); // Match surface color
+  static const Color errorColor = Color(0xFFFF5555); // Softer red
 
-  static ThemeData get theme {
+  static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
       primaryColor: primaryColor,
@@ -21,7 +21,7 @@ class AppTheme {
         primary: primaryColor,
         secondary: accentColor,
         error: errorColor,
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().copyWith(
         bodyLarge: const TextStyle(color: textColor),
@@ -31,7 +31,7 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
-          foregroundColor: whiteColor,
+          foregroundColor: textColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -63,7 +63,7 @@ class AppTheme {
         ),
         hintStyle: GoogleFonts.poppins(
           fontSize: 12,
-          color: secondaryTextColor,
+          color: textColor, // Use pure white for hints in dark mode
         ),
       ),
       cardTheme: CardThemeData(
@@ -88,24 +88,24 @@ class AppTheme {
         contentTextStyle: GoogleFonts.poppins(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: whiteColor,
+          color: textColor,
         ),
       ),
       drawerTheme: const DrawerThemeData(
         backgroundColor: sidebarColor,
       ),
       listTileTheme: ListTileThemeData(
-        iconColor: whiteColor,
-        textColor: whiteColor,
+        iconColor: textColor,
+        textColor: textColor,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: whiteColor,
+          color: textColor,
         ),
         subtitleTextStyle: GoogleFonts.poppins(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: whiteColor.withOpacity(0.7),
+          color: textColor, // Use pure white for subtitles
         ),
       ),
     );

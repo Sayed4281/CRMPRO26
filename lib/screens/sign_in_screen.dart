@@ -26,12 +26,11 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _signIn() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-    }
+    // Navigate to HomeScreen without validation
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
   }
 
   Future<void> _launchGoogle() async {
@@ -65,8 +64,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     color: AppTheme.backgroundColor,
                     child: Center(
                       child: SizedBox(
-                       width: 450,
-                  height: 450, // Matches the updated SignUpScreen.dart
+                        width: 450,
+                        height: 450,
                         child: Image.asset(
                           'assets/images/signin_image.jpg',
                           fit: BoxFit.contain,

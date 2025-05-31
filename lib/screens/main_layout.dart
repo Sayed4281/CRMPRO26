@@ -46,7 +46,7 @@ class MainLayout extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: Colors.black, // CRM text remains black
                         ),
                       ),
                     ],
@@ -57,15 +57,16 @@ class MainLayout extends StatelessWidget {
                 _buildNavItem(context, 'Products', Icons.shopping_cart, const ProductsScreen(), currentPage == ProductsScreen),
                 _buildNavItem(context, 'Enquiry', Icons.question_answer, const EnquiryScreen(), currentPage == EnquiryScreen),
                 ExpansionTile(
-                  leading: const Icon(Icons.leaderboard, color: Colors.black),
+                  leading: const Icon(Icons.leaderboard, color: Colors.grey),
                   title: Text(
                     'Leads',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: (currentPage == LeadsScreen || currentPage == QualifiedLeadsScreen || currentPage == BadLeadsScreen)
+                      color: const Color(0xFF49454F), // Leads text color
+                      backgroundColor: (currentPage == LeadsScreen || currentPage == QualifiedLeadsScreen || currentPage == BadLeadsScreen)
                           ? const Color(0xFFE8DEF8)
-                          : Colors.black,
+                          : null, // Background for selected Leads
                     ),
                   ),
                   onExpansionChanged: (expanded) {
@@ -101,13 +102,17 @@ class MainLayout extends StatelessWidget {
 
   Widget _buildNavItem(BuildContext context, String title, IconData icon, Widget destination, bool isActive) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
-      title: Text(
-        title,
-        style: GoogleFonts.poppins(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: isActive ? const Color(0xFFE8DEF8) : Colors.black,
+      leading: Icon(icon, color: Colors.grey), // Use the passed icon parameter
+      title: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        color: isActive ? const Color(0xFFE8DEF8) : null, // Background for selected item
+        child: Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xFF49454F), // Text color for all nav items
+          ),
         ),
       ),
       onTap: () {
@@ -121,12 +126,16 @@ class MainLayout extends StatelessWidget {
 
   Widget _buildSubNavItem(BuildContext context, String title, Widget destination, bool isActive) {
     return ListTile(
-      title: Text(
-        title,
-        style: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: isActive ? const Color(0xFFE8DEF8) : Colors.black,
+      title: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        color: isActive ? const Color(0xFFE8DEF8) : null, // Background for selected sub-item
+        child: Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xFF49454F), // Text color for sub-nav items
+          ),
         ),
       ),
       onTap: () {
