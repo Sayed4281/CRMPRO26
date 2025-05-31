@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< HEAD
 import '../theme/app_theme.dart';
 import '../theme/dark_theme.dart';
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
 
 class ViewVisitDialog extends StatelessWidget {
   final Map<String, String> visit;
@@ -28,9 +31,13 @@ class ViewVisitDialog extends StatelessWidget {
       case 'Follow-up':
         return ['lead', 'discussion'].contains(field);
       case 'Demo':
+<<<<<<< HEAD
         return ['lead', 'demoGivenTo', 'status', 'completionDate', 'feedback', 'reason']
             .contains(field) &&
             (field != 'reason' || (status == 'In Progress' || status == 'Cancelled'));
+=======
+        return ['lead', 'demoGivenTo', 'status', 'completionDate', 'feedback'].contains(field);
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
       case 'Installation':
         return ['lead', 'status', 'trainingGivenTo', 'remarks'].contains(field);
       case 'Training':
@@ -48,6 +55,10 @@ class ViewVisitDialog extends StatelessWidget {
     }
   }
 
+<<<<<<< HEAD
+=======
+  // New method to map field names to display labels
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
   String _getDisplayLabel(String field) {
     const fieldToLabelMap = {
       'name': 'Customer Name',
@@ -74,10 +85,17 @@ class ViewVisitDialog extends StatelessWidget {
       'amount': 'Amount',
       'paymentCollected': 'Payment Collected',
     };
+<<<<<<< HEAD
     return fieldToLabelMap[field] ?? field;
   }
 
   Widget _buildDetailRow(String label, String value, bool isDarkMode, {int maxLines = 1}) {
+=======
+    return fieldToLabelMap[field] ?? field; // Fallback to field name if not mapped
+  }
+
+  Widget _buildDetailRow(String label, String value, {int maxLines = 1}) {
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Column(
@@ -88,7 +106,11 @@ class ViewVisitDialog extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w500,
+<<<<<<< HEAD
               color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+=======
+              color: const Color(0xCC000000),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
             ),
           ),
           const SizedBox(height: 2),
@@ -96,18 +118,27 @@ class ViewVisitDialog extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
+<<<<<<< HEAD
               color: isDarkMode ? DarkTheme.backgroundColor : Colors.white,
               border: Border.all(
                 color: isDarkMode ? DarkTheme.textColor.withOpacity(0.3) : const Color(0xCC000000),
                 width: 1,
               ),
+=======
+              color: Colors.white,
+              border: Border.all(color: const Color(0xCC000000), width: 1),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               value,
               style: GoogleFonts.poppins(
                 fontSize: 12,
+<<<<<<< HEAD
                 color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+=======
+                color: const Color(0xCC000000),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               ),
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
@@ -120,10 +151,17 @@ class ViewVisitDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final String visitType = visit['type'] ?? 'Unknown';
     final String? status = visit['status'];
 
+=======
+    final String visitType = visit['type'] ?? 'Unknown';
+    final String? status = visit['status'];
+
+    // List of all possible fields
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     final allFields = [
       'name',
       'type',
@@ -150,13 +188,24 @@ class ViewVisitDialog extends StatelessWidget {
       'paymentCollected',
     ];
 
+<<<<<<< HEAD
     final visibleFields = allFields.where((field) => _shouldShowField(field, visitType, status)).toList();
 
+=======
+    // Filter fields that should be shown and handle nulls
+    final visibleFields = allFields.where((field) => _shouldShowField(field, visitType, status)).toList();
+
+    // Ensure name, type, and visitId are included
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     final Map<String, String> displayVisit = Map.from(visit);
     displayVisit['name'] ??= 'N/A';
     displayVisit['type'] ??= 'Unknown';
     displayVisit['visitId'] ??= 'N/A';
 
+<<<<<<< HEAD
+=======
+    // Fields that can take a full row
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     final fullWidthFields = [
       'requirements',
       'discussion',
@@ -166,14 +215,26 @@ class ViewVisitDialog extends StatelessWidget {
       'reason'
     ];
 
+<<<<<<< HEAD
     final fullWidth = visibleFields.where((field) => fullWidthFields.contains(field) && displayVisit[field] != null).toList();
     final toPair = visibleFields.where((field) => !fullWidthFields.contains(field) && displayVisit[field] != null).toList();
 
+=======
+    // Separate fields into full-width and those needing pairing
+    final fullWidth = visibleFields.where((field) => fullWidthFields.contains(field) && displayVisit[field] != null).toList();
+    final toPair = visibleFields.where((field) => !fullWidthFields.contains(field) && displayVisit[field] != null).toList();
+
+    // Prioritize name, type, and visitId at the start
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     final orderedToPair = ['name', 'type', 'visitId']
         .where((field) => toPair.contains(field))
         .toList()
       ..addAll(toPair.where((field) => !['name', 'type', 'visitId'].contains(field)));
 
+<<<<<<< HEAD
+=======
+    // Build rows for paired fields
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     final List<Widget> rows = [];
     for (int i = 0; i < orderedToPair.length; i += 2) {
       final field1 = orderedToPair[i];
@@ -184,22 +245,36 @@ class ViewVisitDialog extends StatelessWidget {
           children: [
             Expanded(
               child: _buildDetailRow(
+<<<<<<< HEAD
                 _getDisplayLabel(field1),
                 field1 == 'completionDate'
                     ? DateTime.parse(displayVisit[field1]!).toString().split(' ')[0]
                     : displayVisit[field1]!,
                 isDarkMode,
+=======
+                _getDisplayLabel(field1), // Use the mapped label
+                field1 == 'completionDate'
+                    ? DateTime.parse(displayVisit[field1]!).toString().split(' ')[0]
+                    : displayVisit[field1]!,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: field2 != null
                   ? _buildDetailRow(
+<<<<<<< HEAD
                 _getDisplayLabel(field2),
                 field2 == 'completionDate'
                     ? DateTime.parse(displayVisit[field2]!).toString().split(' ')[0]
                     : displayVisit[field2]!,
                 isDarkMode,
+=======
+                _getDisplayLabel(field2), // Use the mapped label
+                field2 == 'completionDate'
+                    ? DateTime.parse(displayVisit[field2]!).toString().split(' ')[0]
+                    : displayVisit[field2]!,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               )
                   : const SizedBox.shrink(),
             ),
@@ -208,6 +283,7 @@ class ViewVisitDialog extends StatelessWidget {
       );
     }
 
+<<<<<<< HEAD
     for (final field in fullWidth) {
       rows.add(
         _buildDetailRow(
@@ -216,6 +292,16 @@ class ViewVisitDialog extends StatelessWidget {
               ? DateTime.parse(displayVisit[field]!).toString().split(' ')[0]
               : displayVisit[field]!,
           isDarkMode,
+=======
+    // Add full-width fields
+    for (final field in fullWidth) {
+      rows.add(
+        _buildDetailRow(
+          _getDisplayLabel(field), // Use the mapped label
+          field == 'completionDate'
+              ? DateTime.parse(displayVisit[field]!).toString().split(' ')[0]
+              : displayVisit[field]!,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
           maxLines: 3,
         ),
       );
@@ -227,7 +313,11 @@ class ViewVisitDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
+<<<<<<< HEAD
         backgroundColor: isDarkMode ? DarkTheme.whiteColor : Colors.white,
+=======
+        backgroundColor: Colors.white,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
         elevation: 8,
         contentPadding: const EdgeInsets.all(12),
         titlePadding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
@@ -239,6 +329,7 @@ class ViewVisitDialog extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
+<<<<<<< HEAD
                 color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
               ),
             ),
@@ -248,6 +339,13 @@ class ViewVisitDialog extends StatelessWidget {
                 color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.grey,
                 size: 20,
               ),
+=======
+                color: const Color(0xCC000000),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.close, color: Colors.grey, size: 20),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               padding: const EdgeInsets.all(0),
               onPressed: () => Navigator.pop(context),
             ),
@@ -273,10 +371,14 @@ class ViewVisitDialog extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+<<<<<<< HEAD
                     side: BorderSide(
                       color: isDarkMode ? DarkTheme.textColor.withOpacity(0.3) : const Color(0xCC000000),
                       width: 1,
                     ),
+=======
+                    side: const BorderSide(color: Color(0xCC000000), width: 1),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   ),
                 ),
                 child: Text(
@@ -284,7 +386,11 @@ class ViewVisitDialog extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
+<<<<<<< HEAD
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
+=======
+                    color: const Color(0xCC000000),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   ),
                 ),
               ),
@@ -295,4 +401,8 @@ class ViewVisitDialog extends StatelessWidget {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0

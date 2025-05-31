@@ -61,7 +61,10 @@ class _VisitsScreenState extends State<VisitsScreen> {
   }
 
   void _showImportDialog() {
+<<<<<<< HEAD
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     showDialog(
       context: context,
       barrierColor: Colors.black54,
@@ -69,6 +72,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: AlertDialog(
+<<<<<<< HEAD
             backgroundColor: isDarkMode ? DarkTheme.whiteColor : AppTheme.whiteColor,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,6 +88,14 @@ class _VisitsScreenState extends State<VisitsScreen> {
                     Icons.close,
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                   ),
+=======
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Import New', style: GoogleFonts.poppins()),
+                IconButton(
+                  icon: const Icon(Icons.close),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -96,36 +108,57 @@ class _VisitsScreenState extends State<VisitsScreen> {
                     width: 300,
                     height: 150,
                     decoration: BoxDecoration(
+<<<<<<< HEAD
                       color: isDarkMode ? DarkTheme.backgroundColor : Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isDarkMode ? DarkTheme.textColor.withOpacity(0.3) : Colors.grey.shade300,
                         style: BorderStyle.solid,
                       ),
+=======
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey.shade300, style: BorderStyle.solid),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+<<<<<<< HEAD
                         Icon(
                           Icons.cloud_upload,
                           size: 40,
                           color: isDarkMode ? DarkTheme.accentColor : Colors.blue,
+=======
+                        const Icon(
+                          Icons.cloud_upload,
+                          size: 40,
+                          color: Colors.blue,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                         ),
                         const SizedBox(height: 10),
                         Text(
                           'Drag & Drop or choose a file to upload',
+<<<<<<< HEAD
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.grey,
                           ),
+=======
+                          style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                         ),
                         const SizedBox(height: 5),
                         Text(
                           'Max Size: 150 MiB',
+<<<<<<< HEAD
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.grey,
                           ),
+=======
+                          style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                         ),
                       ],
                     ),
@@ -138,15 +171,20 @@ class _VisitsScreenState extends State<VisitsScreen> {
                 onPressed: () => Navigator.pop(context),
                 child: Text(
                   'Cancel',
+<<<<<<< HEAD
                   style: GoogleFonts.poppins(
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                   ),
+=======
+                  style: GoogleFonts.poppins(color: Colors.black),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                 ),
               ),
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.pop(context);
                 },
+<<<<<<< HEAD
                 icon: Icon(Icons.file_download, color: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor),
                 label: Text(
                   'Import',
@@ -156,6 +194,15 @@ class _VisitsScreenState extends State<VisitsScreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isDarkMode ? DarkTheme.primaryColor : const Color(0xFF6C5DD3),
+=======
+                icon: const Icon(Icons.file_download, color: Colors.white),
+                label: Text(
+                  'Import',
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C5DD3),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -193,7 +240,10 @@ class _VisitsScreenState extends State<VisitsScreen> {
   }
 
   void _showDeleteConfirmationDialog(int index) {
+<<<<<<< HEAD
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
     showDialog(
       context: context,
       barrierColor: Colors.black54,
@@ -201,7 +251,10 @@ class _VisitsScreenState extends State<VisitsScreen> {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: AlertDialog(
+<<<<<<< HEAD
             backgroundColor: isDarkMode ? DarkTheme.whiteColor : AppTheme.whiteColor,
+=======
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -214,6 +267,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+<<<<<<< HEAD
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                   ),
                 ),
@@ -223,6 +277,13 @@ class _VisitsScreenState extends State<VisitsScreen> {
                     size: 18,
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                   ),
+=======
+                    color: Colors.black,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, size: 18),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -231,19 +292,34 @@ class _VisitsScreenState extends State<VisitsScreen> {
               width: 300,
               child: Text(
                 'Are you sure you want to delete this visit? This action cannot be undone.',
+<<<<<<< HEAD
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: isDarkMode ? DarkTheme.textColor.withOpacity(0.7) : Colors.black87,
                 ),
+=======
+                style: GoogleFonts.poppins(fontSize: 12, color: Colors.black87),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               ),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
+<<<<<<< HEAD
+=======
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFFE6E6FA),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                 child: Text(
                   'Cancel',
                   style: GoogleFonts.poppins(
                     fontSize: 12,
+<<<<<<< HEAD
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.textColor,
                   ),
                 ),
@@ -252,6 +328,9 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+=======
+                    color: Colors.black,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   ),
                 ),
               ),
@@ -263,20 +342,37 @@ class _VisitsScreenState extends State<VisitsScreen> {
                     SnackBar(
                       content: Text(
                         'Visit deleted successfully',
+<<<<<<< HEAD
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           color: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
                         ),
                       ),
                       backgroundColor: isDarkMode ? DarkTheme.accentColor : Colors.green,
+=======
+                        style: GoogleFonts.poppins(fontSize: 14),
+                      ),
+                      backgroundColor: Colors.green,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                       duration: const Duration(seconds: 2),
                     ),
                   );
                 },
+<<<<<<< HEAD
+=======
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C5DD3),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                 child: Text(
                   'Delete',
                   style: GoogleFonts.poppins(
                     fontSize: 12,
+<<<<<<< HEAD
                     color: isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor,
                   ),
                 ),
@@ -285,6 +381,9 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+=======
+                    color: Colors.white,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   ),
                 ),
               ),
@@ -324,6 +423,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
     return MainLayout(
       currentPage: VisitsScreen,
       content: Container(
+<<<<<<< HEAD
         color: isDarkMode ? DarkTheme.backgroundColor : const Color(0xFFFFFFFF),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -872,6 +972,445 @@ class _VisitsScreenState extends State<VisitsScreen> {
             color: isSelected
                 ? (isDarkMode ? DarkTheme.textColor : AppTheme.whiteColor)
                 : (isDarkMode ? DarkTheme.textColor : AppTheme.textColor),
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+=======
+        color: const Color(0xFFFFFFFF),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      );
+                    },
+                    child: Text(
+                      'Dashboard',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: const Color.fromARGB(255, 1, 7, 12),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    ' > Visits',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: const Color.fromARGB(255, 1, 7, 12),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 32),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildSummaryCard('Total', '28 Visits', Icons.event),
+                      const SizedBox(width: 8),
+                      _buildSummaryCard('Completed', '19', Icons.check_circle),
+                      const SizedBox(width: 8),
+                      _buildSummaryCard('Pending', '6', Icons.hourglass_empty),
+                      const SizedBox(width: 8),
+                      _buildSummaryCard('Service', '3', Icons.build),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(
+                'Visits List',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Container(
+                    width: 800,
+                    height: 50,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Search by name, ID',
+                        hintStyle: GoogleFonts.poppins(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Color(0xFF6C5DD3)),
+                        ),
+                        suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.file_download, color: Color(0xFF8C1AFC)),
+                    onPressed: _showImportDialog,
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _showAddEditVisitDialog();
+                    },
+                    icon: const Icon(Icons.add, color: Colors.white),
+                    label: Text(
+                      'Add Visit',
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6C5DD3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: [
+                  _buildFilterButton('All'),
+                  _buildFilterButton('New'),
+                  _buildFilterButton('Follow-up'),
+                  _buildFilterButton('Demo'),
+                  _buildFilterButton('Installation'),
+                  _buildFilterButton('Service'),
+                  _buildFilterButton('Payment'),
+                  _buildFilterButton('Training'),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Table(
+                    border: const TableBorder(
+                      horizontalInside: BorderSide(color: Color(0xFFE8E8E8)),
+                    ),
+                    defaultColumnWidth: const FixedColumnWidth(240),
+                    children: [
+                      TableRow(
+                        children: [
+                          _buildTableHeader('Sl No', TextAlign.center),
+                          _buildTableHeader('Name', TextAlign.left),
+                          _buildTableHeader('Visit ID', TextAlign.center),
+                          _buildTableHeader('Visit Type', TextAlign.center),
+                          _buildTableHeader('', TextAlign.center),
+                        ],
+                      ),
+                      ..._buildFilteredTableRows(),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: currentPage > 1
+                        ? () {
+                      setState(() {
+                        currentPage--;
+                      });
+                    }
+                        : null,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.arrow_left, color: Colors.black),
+                        Text(
+                          'Previous',
+                          style: GoogleFonts.poppins(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  ..._buildPageNumbers(),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    onPressed: currentPage < (visits.length / visitsPerPage).ceil()
+                        ? () {
+                      setState(() {
+                        currentPage++;
+                      });
+                    }
+                        : null,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Next',
+                          style: GoogleFonts.poppins(color: Colors.black),
+                        ),
+                        const Icon(Icons.arrow_right, color: Colors.black),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSummaryCard(String title, String value, IconData icon) {
+    return Card(
+      elevation: 2,
+      color: const Color(0xFFF7F6FF),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Container(
+        width: 140,
+        height: 108,
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: const Color(0xFF8C1AFC), size: 24),
+            const SizedBox(height: 8),
+            Text(
+              value,
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+            Text(
+              title,
+              style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterButton(String label) {
+    return ChoiceChip(
+      label: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(label, style: GoogleFonts.poppins()),
+      ),
+      selected: selectedVisitType == label,
+      selectedColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      side: const BorderSide(color: Colors.transparent),
+      labelStyle: GoogleFonts.poppins(
+        color: Colors.black,
+        fontWeight: selectedVisitType == label ? FontWeight.w600 : FontWeight.normal,
+      ),
+      onSelected: (selected) {
+        setState(() {
+          selectedVisitType = label;
+          currentPage = 1;
+        });
+      },
+    );
+  }
+
+  Widget _buildTableHeader(String title, TextAlign alignment) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          color: Colors.black87,
+        ),
+        textAlign: alignment,
+      ),
+    );
+  }
+
+  List<TableRow> _buildFilteredTableRows() {
+    List<Map<String, String>> filteredVisits = selectedVisitType == 'All'
+        ? visits
+        : visits.where((visit) => visit['type'] == selectedVisitType).toList();
+
+    if (searchQuery.isNotEmpty) {
+      filteredVisits = filteredVisits.where((visit) {
+        final name = visit['name']!.toLowerCase();
+        final visitId = visit['visitId']!.toLowerCase();
+        return name.contains(searchQuery) || visitId.contains(searchQuery);
+      }).toList();
+    }
+
+    final startIndex = (currentPage - 1) * visitsPerPage;
+    final endIndex = startIndex + visitsPerPage;
+    final paginatedVisits = filteredVisits
+        .asMap()
+        .entries
+        .where((entry) => entry.key >= startIndex && entry.key < endIndex)
+        .toList();
+
+    return paginatedVisits.map((entry) {
+      int index = entry.key;
+      Map<String, String> visit = entry.value;
+      return TableRow(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Text(
+              visit['index']!,
+              style: GoogleFonts.poppins(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Text(
+              visit['name']!,
+              style: GoogleFonts.poppins(fontSize: 14),
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Text(
+              visit['visitId']!,
+              style: GoogleFonts.poppins(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Text(
+              visit['type']!,
+              style: GoogleFonts.poppins(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: PopupMenuButton<String>(
+              tooltip: '',
+              icon: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                child: const Icon(
+                  Icons.more_vert,
+                  color: Colors.black,
+                  size: 24,
+                ),
+              ),
+              color: Colors.transparent,
+              elevation: 0,
+              onSelected: (String value) {
+                if (value == 'edit') {
+                  _showAddEditVisitDialog(visit: visit, index: index);
+                } else if (value == 'delete') {
+                  _showDeleteConfirmationDialog(index);
+                } else if (value == 'view') {
+                  _showViewVisitDialog(visit);
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'view',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.visibility, color: Colors.black, size: 20),
+                      const SizedBox(width: 8),
+                      Text('View', style: GoogleFonts.poppins(fontSize: 14)),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<String>(
+                  value: 'edit',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.edit, color: Colors.black, size: 20),
+                      const SizedBox(width: 8),
+                      Text('Edit', style: GoogleFonts.poppins(fontSize: 14)),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.delete, color: Colors.red, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Delete',
+                        style: GoogleFonts.poppins(fontSize: 14, color: Colors.red),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }).toList();
+  }
+
+  List<Widget> _buildPageNumbers() {
+    final totalPages = (visits.length / visitsPerPage).ceil();
+    List<Widget> pageNumbers = [];
+    for (int i = 1; i <= totalPages && i <= 3; i++) {
+      pageNumbers.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: _buildPageNumber(i),
+        ),
+      );
+    }
+    return pageNumbers;
+  }
+
+  Widget _buildPageNumber(int number) {
+    bool isSelected = currentPage == number;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          currentPage = number;
+        });
+      },
+      child: Container(
+        width: 24,
+        height: 24,
+        alignment: Alignment.center,
+        decoration: isSelected
+            ? BoxDecoration(
+          color: const Color(0xFF6C5DD3),
+          borderRadius: BorderRadius.circular(4),
+        )
+            : null,
+        child: Text(
+          number.toString(),
+          style: GoogleFonts.poppins(
+            color: isSelected ? Colors.white : Colors.black,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
           ),
         ),

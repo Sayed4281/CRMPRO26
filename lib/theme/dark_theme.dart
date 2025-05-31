@@ -110,4 +110,8 @@ class DarkTheme {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0

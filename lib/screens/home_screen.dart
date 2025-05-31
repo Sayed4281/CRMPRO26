@@ -10,9 +10,15 @@ import 'enquiry_screen.dart';
 import 'leads_screen.dart';
 import 'calls_screen.dart';
 import 'add_edit_visit_dialog.dart';
+<<<<<<< HEAD
 import 'add_enquiry_dialog.dart';
 import 'add_call_dialog.dart';
 import 'add_customer_dialog.dart';
+=======
+import 'add_enquiry.dart';
+import 'add_call.dart';
+import 'add_customer.dart';
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
 import 'reports_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,7 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Color> purpleShades = List.generate(
     7,
+<<<<<<< HEAD
         (i) => Colors.deepPurple[(i + 1) * 100]!,
+=======
+    (i) => Colors.deepPurple[(i + 1) * 100]!,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
   );
 
   final DateFormat _dateFormat = DateFormat("MMM d");
@@ -89,12 +99,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeader() => Text(
+<<<<<<< HEAD
     'Welcome!',
     style: GoogleFonts.poppins(
       fontSize: 36,
       fontWeight: FontWeight.bold,
     ),
   );
+=======
+        'Welcome!',
+        style: GoogleFonts.poppins(
+          fontSize: 36,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
 
   Widget _buildStatsCards() {
     List<Map<String, dynamic>> stats = [
@@ -181,17 +200,29 @@ class _HomeScreenState extends State<HomeScreen> {
       {
         'label': 'Add Customer',
         'icon': Icons.person_add,
+<<<<<<< HEAD
         // No screen for this — handled with a dialog
+=======
+        'screen': const AddCustomerScreen(),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
       },
       {
         'label': 'Add Enquiry',
         'icon': Icons.question_answer,
+<<<<<<< HEAD
         // No screen for this — handled with a dialog
+=======
+        'screen': const AddEnquiryScreen(),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
       },
       {
         'label': 'Log Call',
         'icon': Icons.phone,
+<<<<<<< HEAD
         // No screen for this — handled with a dialog
+=======
+        'screen': const AddCallScreen(),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
       },
       {
         'label': 'Schedule Visit',
@@ -212,7 +243,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(16),
               ),
               backgroundColor:
+<<<<<<< HEAD
               Colors.white.withOpacity(0.9), // Glass-like dialog
+=======
+                  Colors.white.withOpacity(0.9), // Glass-like dialog
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
                   maxWidth: 500,
@@ -253,7 +288,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: const Color(0xFF7B1FA2),
                   foregroundColor: Colors.white,
                   padding:
+<<<<<<< HEAD
                   const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+=======
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                 ),
                 onPressed: () {
                   if (item['label'] == 'Schedule Visit') {
@@ -351,6 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .asMap()
           .entries
           .map((entry) => Padding(
+<<<<<<< HEAD
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
           children: [
@@ -364,6 +404,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ))
+=======
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      color: colors[entry.key % colors.length],
+                    ),
+                    const SizedBox(width: 4),
+                    Text(entry.value),
+                  ],
+                ),
+              ))
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
           .toList(),
     );
   }
@@ -402,10 +457,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2030),
                     );
+<<<<<<< HEAD
                     if (picked != null) {
                       setState(() => selectedDate = picked);
                     }
                   },
+=======
+                    setState(() => selectedDate = picked);
+                                    },
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple.shade400,
                     foregroundColor: Colors.white,
@@ -457,7 +517,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight:
+<<<<<<< HEAD
                       isSelected ? FontWeight.w600 : FontWeight.normal,
+=======
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                       color: isSelected ? Colors.black : Colors.grey,
                       decoration: isSelected ? TextDecoration.underline : null,
                     ),
@@ -492,7 +556,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 return BarChartGroupData(
                   x: i,
                   barRods:
+<<<<<<< HEAD
                   List.generate(chartLabels[selectedChart]!.length, (j) {
+=======
+                      List.generate(chartLabels[selectedChart]!.length, (j) {
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
                     return BarChartRodData(
                       toY: Random().nextInt(30).toDouble(),
                       color: purpleShades[j % purpleShades.length],
@@ -539,9 +607,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       getTitlesWidget: (value, _) => Text('${value.toInt()}')),
                 ),
                 topTitles:
+<<<<<<< HEAD
                 const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 rightTitles:
                 const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+=======
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
               ),
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
@@ -566,4 +640,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6af909091caab2da233caa92503efed2312d79b0
